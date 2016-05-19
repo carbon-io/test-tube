@@ -1,0 +1,23 @@
+{
+  "name": "test",
+  "version": "0.1.0",
+  "description": "Test framework for Carbon.io",
+  "keywords": ["carbon-io"],
+  "contributors": [
+    "Will Shulman <will@objectlabs.com>"
+  ],
+  "repository" : { 
+    "type" : "git",
+    "url" : "https://github.com/carbon-io/test.git"
+  },
+  
+  "main": "lib/index.js",
+  "engines": { "node": ">= 0.5.2" },
+  "dependencies" : {
+    "atom": "git+ssh://git@github.com:carbon-io/atom.git",
+    "bond": "git+ssh://git@github.com:carbon-io/bond.git",
+    "fiber": "git+ssh://git@github.com:carbon-io/fiber.git",
+    "lodash" : "4.5.x"
+  },
+  "preferGlobal": false
+}
