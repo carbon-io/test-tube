@@ -1,6 +1,6 @@
 {
-  'a': 1,
-  'b': "hello",
-  'c': [ true, false ]
+  "a": 1,
+  "b": "hello",
+  "c": [ true, false ]
 }
 
