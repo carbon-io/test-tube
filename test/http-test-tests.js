@@ -23,6 +23,11 @@ var test = o({
   name: "httptest",
 
   /**********************************************************************
+   * baseUrl
+   */
+  baseUrl: "https://raw.githubusercontent.com",
+
+  /**********************************************************************
    * tests
    */
   tests: [
@@ -42,7 +47,7 @@ var test = o({
     },
     {
       reqSpec: {
-        url: url,
+        url: "/carbon-io/test-tube/master/test/fixtures/test1.json?token=AAtDzfV-iOqjMHHVTkjx0tnK2AfC64NPks5XR9NYwA%3D%3D",
         method: "GET"
       },
       resSpec: {
