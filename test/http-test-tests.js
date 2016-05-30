@@ -1,6 +1,6 @@
-var o = require('atom').o(module).main
+var o = require('atom').o(module)
 var _o = require('bond')._o(module)
-var __ = require('fiber').__
+var __ = require('fiber').__.main(module)
 var _ = require('lodash')
 var assert = require('assert')
 
@@ -8,7 +8,7 @@ var assert = require('assert')
  * http-test-tests
  */
 var visited = []
-var url = "https://raw.githubusercontent.com/carbon-io/test-tube/master/test/fixtures/test1.json?token=AAtDzfV-iOqjMHHVTkjx0tnK2AfC64NPks5XR9NYwA%3D%3D"
+var url = "https://raw.githubusercontent.com/carbon-io/test-tube/master/test/fixtures/test1.json?token=AAtDzcd2-p2GjxzNTRoX1SZ41_pnmMH0ks5XVeADwA%3D%3D"
 
 var test = o({
 
@@ -47,7 +47,7 @@ var test = o({
     },
     {
       reqSpec: {
-        url: "/carbon-io/test-tube/master/test/fixtures/test1.json?token=AAtDzfV-iOqjMHHVTkjx0tnK2AfC64NPks5XR9NYwA%3D%3D",
+        url: "/carbon-io/test-tube/master/test/fixtures/test1.json?token=AAtDzRAYNtoNk24O57llebX9poca0oiHks5XVd9twA%3D%3D",
         method: "GET"
       },
       resSpec: {
@@ -76,6 +76,19 @@ var test = o({
       },
       resSpec: function(res) { return res.statusCode === 200 },
     },
+    {
+      reqSpec: {
+        url: "/doesnotexist",
+        method: "GET"
+      },
+      resSpec: {
+        statusCode: 400
+      },
+    },
   ]
+})
+
+__(function() {
+  test.run()
 })
 
