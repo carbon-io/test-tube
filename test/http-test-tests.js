@@ -8,7 +8,7 @@ var assert = require('assert')
  * http-test-tests
  */
 var visited = []
-var url = "https://raw.githubusercontent.com/carbon-io/test-tube/master/test/fixtures/test1.json?token=AAtDzcd2-p2GjxzNTRoX1SZ41_pnmMH0ks5XVeADwA%3D%3D"
+var url = "http://pastebin.com/raw/ewNZGrjd"
 
 var test = o({
 
@@ -25,7 +25,7 @@ var test = o({
   /**********************************************************************
    * baseUrl
    */
-  baseUrl: "https://raw.githubusercontent.com",
+  baseUrl: "http://pastebin.com/raw",
 
   /**********************************************************************
    * tests
@@ -47,7 +47,7 @@ var test = o({
     },
     {
       reqSpec: {
-        url: "/carbon-io/test-tube/master/test/fixtures/test1.json?token=AAtDzRAYNtoNk24O57llebX9poca0oiHks5XVd9twA%3D%3D",
+        url: "/ewNZGrjd",
         method: "GET"
       },
       resSpec: {
@@ -82,7 +82,7 @@ var test = o({
         method: "GET"
       },
       resSpec: {
-        statusCode: 400
+        statusCode: 404
       },
     },
   ]
