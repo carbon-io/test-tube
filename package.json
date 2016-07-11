@@ -17,8 +17,8 @@
     "atom": "git+ssh://git@github.com:carbon-io/atom.git",
     "bond": "git+ssh://git@github.com:carbon-io/bond.git",
     "fiber": "git+ssh://git@github.com:carbon-io/fiber.git",
+    "ejson": "git+ssh://git@github.com:carbon-io/ejson.git",
     "http-errors": "git+ssh://git@github.com:carbon-io/http-errors.git",
-    "mongodb-extended-json": "1.6.3",
     "lodash" : "4.5.x"
   },
   "preferGlobal": false
