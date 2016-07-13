@@ -90,20 +90,37 @@ var suite = o({
       name: "T5",
       doTest: function() { visited.push(this.name) }
     }),
+    o({
+      _type: '../lib/Test',
+      name: "T6",
+      doTest: function() { throw new Error("Expected") },
+      teardown: function() { finalTDCalled = true }
+    }),
   ]
 })
 
+var finalTDCalled = false
 
 __(function() {
   try {
     suite.run()
   } catch (e) {
-    console.log(e)
+    if (e.message !== "Expected") {
+      console.log(e.stack)
+      process.exit(1)
+    }
   }
-  assert.deepEqual(visited, 
-                   ["SETUP-T0","T0","TEARDOWN-T0","T1","SETUP-T2","T2.0",
-                    "T2.1","TEARDOWN-T2.1","T2.2", "T3","SETUP-T4","T4.0",
-                    "TEARDOWN-T4.0","T4.1","TEARDOWN-T4","T5"])
+
+  try { // Do not combine with "try" above. Need to handle "Expected" Error up there
+    assert.deepEqual(visited, 
+                     ["SETUP-T0","T0","TEARDOWN-T0","T1","SETUP-T2","T2.0",
+                      "T2.1","TEARDOWN-T2.1","T2.2", "T3","SETUP-T4","T4.0",
+                      "TEARDOWN-T4.0","T4.1","TEARDOWN-T4","T5"])
+    assert.ok(finalTDCalled)
+  } catch (e) {
+    console.log(e.stack)
+    process.exit(1)
+  }
 })
 
 
