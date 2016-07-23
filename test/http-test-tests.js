@@ -1,6 +1,6 @@
 var o = require('atom').o(module)
 var _o = require('bond')._o(module)
-var __ = require('fiber').__.main(module)
+var __ = require('@carbon-io/fibers').__(module).main
 var _ = require('lodash')
 var assert = require('assert')
 

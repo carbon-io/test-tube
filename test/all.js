@@ -1,4 +1,4 @@
-var __ = require('fiber').__.main(module)
+var __ = require('@carbon-io/fibers').__(module).main
 
 __(function() {
   try {
