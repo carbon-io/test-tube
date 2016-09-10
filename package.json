@@ -19,7 +19,8 @@
     "@carbon-io/fibers": "git+ssh://git@github.com:carbon-io/fibers.git",
     "ejson": "git+ssh://git@github.com:carbon-io/ejson.git",
     "http-errors": "git+ssh://git@github.com:carbon-io/http-errors.git",
-    "lodash" : "4.5.x"
+    "lodash" : "4.5.x",
+    "colour": "0.7.*"
   },
   "preferGlobal": false
 }
