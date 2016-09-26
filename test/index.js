@@ -8,6 +8,7 @@ module.exports = o({
   _type: Test,
   name: "Testtube Tests",
   tests: [
+    _o('./TestTests'),
     _o('./OrderingTests'),
     _o('./HttpTestTests')
   ]

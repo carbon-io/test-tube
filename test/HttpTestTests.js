@@ -9,7 +9,7 @@ var assert = require('assert')
  */
 var url = "http://pastebin.com/raw/ewNZGrjd"
 
-module.exports = o({
+var HttpTestTests = o({
 
   /**********************************************************************
    * _type
@@ -50,7 +50,10 @@ module.exports = o({
         method: "GET"
       },
       resSpec: {
-        statusCode: function(statusCode) { return statusCode === 200 },
+        statusCode: function(statusCode) {
+          assert.equal(this.parent, HttpTestTests)
+          return statusCode === 200
+        },
         body: {
           a: 1,
           b: "hello",
@@ -63,10 +66,14 @@ module.exports = o({
         url: url,
         method: "GET"
       },
-      resSpec: function(res) { return res.statusCode === 200 },
+      resSpec: function(res) {
+        assert.equal(this.parent, HttpTestTests)
+        return res.statusCode === 200
+      },
     },
     {
       reqSpec: function(prevResponse) {
+        assert.equal(this.parent, HttpTestTests)
         assert(prevResponse.body.a === 1)
         return {
           url: url,
@@ -84,6 +91,48 @@ module.exports = o({
         statusCode: 404
       },
     },
+    o({
+      _type: '../lib/Test',
+      name: 'TestSetupTeardownHooks',
+      description: 'Test HttpTest child test setup/teardown hooks',
+      doTest: function() {
+        var testSuite = o({
+          _type: '../lib/HttpTest',
+          _C: function() {
+            this.setupCalled = false
+            this.teardownCalled = false
+          },
+          baseUrl: "http://pastebin.com/raw",
+          tests: [
+            {
+              setup: function() {
+                this.parent.setupCalled = true
+              },
+              teardown: function() {
+                this.parent.teardownCalled = true
+              },
+              reqSpec: {
+                url: url,
+                method: "GET"
+              },
+              resSpec: {
+                statusCode: 200,
+                body: {
+                  a: 1,
+                  b: "hello",
+                  c: [ true, false ]
+                }
+              }
+            }
+          ]
+        })
+        var result = testSuite.run()
+        assert(result.passed)
+        assert(testSuite.setupCalled)
+        assert(testSuite.teardownCalled)
+      }
+    })
   ]
 })
 
+module.exports = HttpTestTests
