@@ -1,6 +1,6 @@
 {
   "name": "test-tube",
-  "version": "0.1.13",
+  "version": "0.1.14",
   "description": "Test framework for Carbon.io",
   "keywords": ["carbon-io"],
   "contributors": [
@@ -13,7 +13,7 @@
   "main": "lib/index.js",
   "engines": { "node": ">= 0.12.0" },
   "dependencies" : {
-    "atom": "carbon-io/atom.git#v0.2.20",
+    "atom": "carbon-io/atom.git#v0.2.21",
     "bond": "carbon-io/bond.git#v0.1.17",
     "@carbon-io/fibers": "carbon-io/fibers.git#v0.3.3",
     "ejson": "carbon-io/ejson.git#v0.0.5",
