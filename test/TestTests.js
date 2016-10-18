@@ -1,7 +1,7 @@
 var assert = require('assert')
 
 var EJSON = require('ejson')
-var o = require('atom').o(module).main
+var o = require('@carbon-io/atom').o(module).main
 
 /******************************************************************************
  * TestTests
