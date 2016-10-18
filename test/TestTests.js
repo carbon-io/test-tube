@@ -1,6 +1,6 @@
 var assert = require('assert')
 
-var EJSON = require('ejson')
+var EJSON = require('@carbon-io/ejson')
 var o = require('@carbon-io/atom').o(module).main
 
 /******************************************************************************
