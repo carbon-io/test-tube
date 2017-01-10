@@ -12,6 +12,9 @@
   },  
   "main": "lib/index.js",
   "engines": { "node": ">= 0.12.0" },
+  "devDependencies": {
+    "sinon": "1.17.x"
+  },
   "dependencies" : {
     "@carbon-io/atom": "0.3.x",
     "@carbon-io/bond": "0.2.x",
