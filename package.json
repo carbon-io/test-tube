@@ -1,6 +1,6 @@
 {
   "name": "@carbon-io/test-tube",
-  "version": "0.2.15",
+  "version": "0.2.16",
   "description": "Test framework for Carbon.io",
   "keywords": ["carbon-io"],
   "contributors": [
