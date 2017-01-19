@@ -10,6 +10,7 @@ module.exports = o({
   tests: [
     _o('./TestTests'),
     _o('./OrderingTests'),
-    _o('./HttpTestTests')
+    _o('./HttpTestTests'),
+    _o('./UtilTests')
   ]
 })
