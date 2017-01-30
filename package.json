@@ -16,10 +16,10 @@
     "sinon": "1.17.x"
   },
   "dependencies" : {
-    "@carbon-io/atom": "0.3.x",
-    "@carbon-io/bond": "0.2.x",
-    "@carbon-io/fibers": "0.3.x",
-    "@carbon-io/ejson": "0.1.x",
+    "@carbon-io/atom": "0.4.x",
+    "@carbon-io/bond": "0.3.x",
+    "@carbon-io/fibers": "0.4.x",
+    "@carbon-io/ejson": "0.2.x",
     "@carbon-io/http-errors": "0.1.x",
     "lodash" : "4.5.x",
     "colour": "0.7.x"
