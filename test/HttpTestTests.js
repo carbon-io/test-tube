@@ -68,7 +68,7 @@ var HttpTestTests = o({
       },
       resSpec: function(res) {
         assert.equal(this.parent, HttpTestTests)
-        return res.statusCode === 200
+        assert.equal(res.statusCode, 200)
       },
     },
     {
@@ -80,7 +80,9 @@ var HttpTestTests = o({
           method: "GET"
         }
       },
-      resSpec: function(res) { return res.statusCode === 200 },
+      resSpec: function(res) { 
+        assert.equal(res.statusCode, 200)
+      },
     },
     {
       reqSpec: {
