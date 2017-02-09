@@ -52,7 +52,7 @@ var HttpTestTests = o({
       resSpec: {
         statusCode: function(statusCode) {
           assert.equal(this.parent, HttpTestTests)
-          return statusCode === 200
+          assert.equal(statusCode, 200)
         },
         body: {
           a: 1,
