@@ -31,6 +31,7 @@ var HttpTestTests = o({
    */
   tests: [
     {
+      name: 'namedTest',
       reqSpec: {
         url: url,
         method: "GET"
@@ -72,9 +73,9 @@ var HttpTestTests = o({
       },
     },
     {
-      reqSpec: function(prevResponse) {
+      reqSpec: function(history) {
         assert.equal(this.parent, HttpTestTests)
-        assert(prevResponse.body.a === 1)
+        assert(history.getRes(-1).body.a === 1)
         return {
           url: url,
           method: "GET"
@@ -85,6 +86,7 @@ var HttpTestTests = o({
       },
     },
     {
+      name: 'doesNotExistTest',
       reqSpec: {
         url: "/doesnotexist",
         method: "GET"
@@ -92,6 +94,25 @@ var HttpTestTests = o({
       resSpec: {
         statusCode: 404
       },
+    },
+    {
+      name: 'reqResHistoryTest',
+      reqSpec: function(history) {
+        var req = history.getReqSpec('namedTest')
+        assert.deepEqual(history.getReqSpec(0), req)
+        assert.equal(req.url, url)
+        assert.equal(req.method, 'GET')
+        req = history.getReqSpec(-1)
+        assert.equal(req.url, this.parent.baseUrl + '/doesnotexist')
+        return req
+      },
+      resSpec: function(response, history) {
+        var resSpec = history.getResSpec(-1)
+        var res = history.getRes('doesNotExistTest')
+        assert.deepEqual(resSpec, {statusCode: 404})
+        assert.deepEqual(_.pick(res.toJSON(), ['statusCode', 'request']), 
+                         _.pick(response.toJSON(), ['statusCode', 'request']))
+      }
     },
     o({
       _type: '../lib/Test',
