@@ -102,9 +102,13 @@ var HttpTestTests = o({
         assert.deepEqual(history.getReqSpec(0), req)
         assert.equal(req.url, url)
         assert.equal(req.method, 'GET')
-        req = history.getReqSpec(-1)
-        assert.equal(req.url, this.parent.baseUrl + '/doesnotexist')
-        return req
+        reqSpec = history.getReqSpec(-1)
+        assert.equal(reqSpec.url, this.parent.baseUrl + '/doesnotexist')
+        req = history.getReq(-1)
+        assert(req.finished)
+        assert.equal(req.path, '/doesnotexist')
+        assert.equal(req.method, 'GET')
+        return reqSpec
       },
       resSpec: function(response, history) {
         var resSpec = history.getResSpec(-1)
@@ -114,6 +118,58 @@ var HttpTestTests = o({
                          _.pick(response.toJSON(), ['statusCode', 'request']))
       }
     },
+    {
+      name: 'assertionErrorHistoryLengthTest',
+      errorExpected: /Request spec must provide a method\./,
+      setup: function() {
+        this.history = undefined
+        this.historyLength = undefined
+      },
+      reqSpec: function(history) {
+        assert.equal(_.uniqBy([
+          history._requestSpecs,
+          history._responseSpecs,
+          history._requests,
+          history._responses], 'length').length,
+          1)
+        this.history = history
+        this.historyLength = history._requestSpecs.length
+        return {
+          // XXX: no method provided, should throw
+          url: '/foobarbaz',
+        }
+      },
+      resSpec: {
+        statusCode: 200
+      },
+      teardown: function() {
+        assert.equal(_.uniqBy([
+          this.history._requestSpecs,
+          this.history._responseSpecs,
+          this.history._requests,
+          this.history._responses], 'length').length,
+          1)
+        assert.equal(this.history._requestSpecs.length, 
+                     this.historyLength + 1)
+      }
+    },
+    o({
+      _type: '../lib/HttpTest',
+      name: 'testReqSpecFunctionNoBaseUrl',
+      tests: [
+        {
+          reqSpec: function() {
+            return {
+              url: url,
+              method: 'GET'
+            }
+          },
+          resSpec: {
+            statusCode: 200
+          }
+        }
+      ]
+    }),
     o({
       _type: '../lib/Test',
       name: 'TestSetupTeardownHooks',
