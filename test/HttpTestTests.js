@@ -172,8 +172,8 @@ var HttpTestTests = o({
     }),
     o({
       _type: '../lib/Test',
-      name: 'TestSetupTeardownHooks',
-      description: 'Test HttpTest child test setup/teardown hooks',
+      name: 'setupTeardownHooksTest',
+      description: 'HttpTest child test setup/teardown hooks test',
       doTest: function() {
         var testSuite = o({
           _type: '../lib/HttpTest',
@@ -210,6 +210,80 @@ var HttpTestTests = o({
         assert(testSuite.setupCalled)
         assert(testSuite.teardownCalled)
       }
+    }),
+    o({
+      _type: '../lib/HttpTest',
+      name: 'httpHistoryStashRestoreTest',
+      baseUrl: "http://pastebin.com/raw",
+      setup: function() {
+        this.httpHistoriesLength = this.context._httpHistories.stack.length
+        assert(this.httpHistoriesLength >= 0)
+        assert.equal(this._history.length, 0)
+      },
+      teardown: function() {
+        assert.equal(this.context._httpHistories.stack.length, 
+                     this.httpHistoriesLength)
+        assert.equal(this._history.length, 2)
+      },
+      tests: [
+        {
+          name: 'firstFirstLevelHttpHistoryStashRestoreTest',
+          reqSpec: {
+            url: '/ewNZGrjd',
+            method: 'GET'
+          },
+          resSpec: {
+            statusCode: 200
+          }
+        },
+        o({
+          _type: '../lib/HttpTest',
+          name: 'subHttpHistoryStashRestoreTest',
+          baseUrl: "http://pastebin.com/raw",
+        setup: function() {
+          this.httpHistoriesLength = this.context._httpHistories.stack.length
+          assert(this.httpHistoriesLength > this.parent.httpHistoriesLength)
+          assert.equal(this._history.length, 0)
+        },
+        teardown: function() {
+          assert.equal(this.context._httpHistories.stack.length, 
+                       this.httpHistoriesLength)
+          assert.equal(this._history.length, 2)
+        },
+          tests: [
+            {
+              name: 'firstSecondLevelHttpHistoryStashRestoreTest',
+              reqSpec: {
+                url: '/ewNZGrjd',
+                method: 'GET'
+              },
+              resSpec: {
+                statusCode: 200
+              }
+            },
+            {
+              name: 'secondSecondLevelHttpHistoryStashRestoreTest',
+              reqSpec: {
+                url: '/ewNZGrjd',
+                method: 'GET'
+              },
+              resSpec: {
+                statusCode: 200
+              }
+            }
+          ],
+        }),
+        {
+          name: 'secondFirstLevelHttpHistoryStashRestoreTest',
+          reqSpec: {
+            url: '/ewNZGrjd',
+            method: 'GET'
+          },
+          resSpec: {
+            statusCode: 200
+          }
+        },
+      ]
     })
   ]
 })
