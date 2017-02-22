@@ -73,9 +73,9 @@ var HttpTestTests = o({
       },
     },
     {
-      reqSpec: function(history) {
+      reqSpec: function(context) {
         assert.equal(this.parent, HttpTestTests)
-        assert(history.getRes(-1).body.a === 1)
+        assert(context.httpHistory.getRes(-1).body.a === 1)
         return {
           url: url,
           method: "GET"
@@ -97,22 +97,22 @@ var HttpTestTests = o({
     },
     {
       name: 'reqResHistoryTest',
-      reqSpec: function(history) {
-        var req = history.getReqSpec('namedTest')
-        assert.deepEqual(history.getReqSpec(0), req)
+      reqSpec: function(context) {
+        var req = context.httpHistory.getReqSpec('namedTest')
+        assert.deepEqual(context.httpHistory.getReqSpec(0), req)
         assert.equal(req.url, url)
         assert.equal(req.method, 'GET')
-        reqSpec = history.getReqSpec(-1)
+        reqSpec = context.httpHistory.getReqSpec(-1)
         assert.equal(reqSpec.url, this.parent.baseUrl + '/doesnotexist')
-        req = history.getReq(-1)
+        req = context.httpHistory.getReq(-1)
         assert(req.finished)
         assert.equal(req.path, '/doesnotexist')
         assert.equal(req.method, 'GET')
         return reqSpec
       },
-      resSpec: function(response, history) {
-        var resSpec = history.getResSpec(-1)
-        var res = history.getRes('doesNotExistTest')
+      resSpec: function(response, context) {
+        var resSpec = context.httpHistory.getResSpec(-1)
+        var res = context.httpHistory.getRes('doesNotExistTest')
         assert.deepEqual(resSpec, {statusCode: 404})
         assert.deepEqual(_.pick(res.toJSON(), ['statusCode', 'request']), 
                          _.pick(response.toJSON(), ['statusCode', 'request']))
@@ -125,15 +125,15 @@ var HttpTestTests = o({
         this.history = undefined
         this.historyLength = undefined
       },
-      reqSpec: function(history) {
+      reqSpec: function(context) {
         assert.equal(_.uniqBy([
-          history._requestSpecs,
-          history._responseSpecs,
-          history._requests,
-          history._responses], 'length').length,
+          context.httpHistory._requestSpecs,
+          context.httpHistory._responseSpecs,
+          context.httpHistory._requests,
+          context.httpHistory._responses], 'length').length,
           1)
-        this.history = history
-        this.historyLength = history._requestSpecs.length
+        this.history = context.httpHistory
+        this.historyLength = context.httpHistory._requestSpecs.length
         return {
           // XXX: no method provided, should throw
           url: '/foobarbaz',
@@ -215,15 +215,15 @@ var HttpTestTests = o({
       _type: '../lib/HttpTest',
       name: 'httpHistoryStashRestoreTest',
       baseUrl: "http://pastebin.com/raw",
-      setup: function() {
-        this.httpHistoriesLength = this.context._httpHistories.stack.length
-        assert(this.httpHistoriesLength >= 0)
-        assert.equal(this._history.length, 0)
+      setup: function(context) {
+        this.statesLength = context._states.length
+        assert(this.statesLength >= 0)
+        assert.equal(context.httpHistory.length, 0)
       },
-      teardown: function() {
-        assert.equal(this.context._httpHistories.stack.length, 
-                     this.httpHistoriesLength)
-        assert.equal(this._history.length, 2)
+      teardown: function(context) {
+        assert.equal(context._states.length, 
+                     this.statesLength)
+        assert.equal(context.httpHistory.length, 2)
       },
       tests: [
         {
@@ -240,16 +240,15 @@ var HttpTestTests = o({
           _type: '../lib/HttpTest',
           name: 'subHttpHistoryStashRestoreTest',
           baseUrl: "http://pastebin.com/raw",
-        setup: function() {
-          this.httpHistoriesLength = this.context._httpHistories.stack.length
-          assert(this.httpHistoriesLength > this.parent.httpHistoriesLength)
-          assert.equal(this._history.length, 0)
-        },
-        teardown: function() {
-          assert.equal(this.context._httpHistories.stack.length, 
-                       this.httpHistoriesLength)
-          assert.equal(this._history.length, 2)
-        },
+          setup: function(context) {
+            this.statesLength = context._states.length
+            assert(this.statesLength > this.parent.statesLength)
+            assert.equal(context.httpHistory.length, 0)
+          },
+          teardown: function(context) {
+            assert.equal(context._states.length, this.statesLength)
+            assert.equal(context.httpHistory.length, 2)
+          },
           tests: [
             {
               name: 'firstSecondLevelHttpHistoryStashRestoreTest',

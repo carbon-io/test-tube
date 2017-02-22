@@ -1,11 +1,38 @@
 var assert = require('assert')
 
+var _ = require('lodash')
 var sinon = require('sinon')
 
 var EJSON = require('@carbon-io/ejson')
 var o = require('@carbon-io/atom').o(module).main
+var oo = require('@carbon-io/atom').oo(module)
 
 var SkipTestError = require('../lib/errors').SkipTestError
+
+var ContextStateStashRestoreTest = oo({
+  _type: '../lib/Test',
+  description: 'Test that context state is stashed and restored',
+  setup: function(context) {
+    assert.equal(_.keys(context.state).length, 0)
+    context.state.foo = this.name
+  },
+  teardown: function(context) {
+    assert.equal(_.keys(context.state).length, 2)
+    assert.equal(_.intersection(_.keys(context.state),
+                                ['foo', 'bar']).length,
+                 2)
+    assert.equal(context.state.foo, this.name)
+    assert.equal(context.state.bar, this.name)
+  },
+  doTest: function(context) {
+    assert.equal(_.keys(context.state).length, 1)
+    assert.equal(_.intersection(_.keys(context.state),
+                                ['foo']).length,
+                 1)
+    assert.equal(context.state.foo, this.name)
+    context.state.bar = this.name
+  },
+})
 
 /******************************************************************************
  * TestTests
@@ -159,6 +186,64 @@ module.exports = o({
         assert(typeof result.tests[1].tests[2].error === 'undefined')
         assert(this._tests.tests[1].tests[2].doTestRan)
       }
+    }),
+    o({
+      _type: ContextStateStashRestoreTest,
+      name: 'contextStateStashRestoreTest',
+      tests: [
+        o({
+          _type: ContextStateStashRestoreTest,
+          name: 'contextStateStashRestoreSelfBeforeChildrenSub1Test',
+          selfBeforeChildren: true,
+          tests: [
+            o({
+              _type: ContextStateStashRestoreTest,
+              name: 'contextStateStashRestoreSubSub1Test',
+            }),
+            o({
+              _type: ContextStateStashRestoreTest,
+              name: 'contextStateStashRestoreSubSub2AsyncTest',
+              setup: function(context, done) {
+                var self = this
+                setImmediate(function() {
+                  try {
+                    ContextStateStashRestoreTest.prototype.setup.call(self, context)
+                  } catch (e) {
+                    return done(e)
+                  }
+                  return done()
+                })
+              },
+              teardown: function(context, done) {
+                var self = this
+                setImmediate(function() {
+                  try {
+                    ContextStateStashRestoreTest.prototype.teardown.call(self, context)
+                  } catch (e) {
+                    return done(e)
+                  }
+                  return done()
+                })
+              },
+              doTest: function(context, done) {
+                var self = this
+                setImmediate(function() {
+                  try {
+                    ContextStateStashRestoreTest.prototype.doTest.call(self, context)
+                  } catch (e) {
+                    return done(e)
+                  }
+                  return done()
+                })
+              }
+            })
+          ]
+        }),
+        o({
+          _type: ContextStateStashRestoreTest,
+          name: 'contextStateStashRestoreSub2Test',
+        })
+      ]
     })
   ]
 })
