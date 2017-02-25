@@ -23,7 +23,8 @@
     "@carbon-io/ejson": "0.3.x",
     "@carbon-io/http-errors": "0.1.x",
     "lodash" : "4.5.x",
-    "colour": "0.7.x"
+    "colour": "0.7.x",
+    "minimatch": "3.0.x"
   },
   "scripts": {
     "test": "node test"

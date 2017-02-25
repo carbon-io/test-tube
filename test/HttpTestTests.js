@@ -1,8 +1,11 @@
+var assert = require('assert')
+
 var o = require('@carbon-io/atom').o(module).main
 var _o = require('@carbon-io/bond')._o(module)
 var __ = require('@carbon-io/fibers').__(module).main
 var _ = require('lodash')
-var assert = require('assert')
+
+var sinon = require('sinon')
 
 /******************************************************************************
  * HttpTestTests
@@ -174,6 +177,12 @@ var HttpTestTests = o({
       _type: '../lib/Test',
       name: 'setupTeardownHooksTest',
       description: 'HttpTest child test setup/teardown hooks test',
+      setup: function() {
+        this.sandbox = sinon.sandbox.create()
+      },
+      teardown: function() {
+        this.sandbox.restore()
+      },
       doTest: function() {
         var testSuite = o({
           _type: '../lib/HttpTest',
@@ -205,6 +214,7 @@ var HttpTestTests = o({
             }
           ]
         })
+        this.sandbox.stub(_o('../lib/Test').prototype, '_log', function() {})
         var result = testSuite.run()
         assert(result.passed)
         assert(testSuite.setupCalled)
