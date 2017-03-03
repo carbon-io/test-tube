@@ -1,0 +1,20 @@
+{
+  "name": "hello-world",
+  "version": "0.1.0",
+  "description": "Hello world application",
+  "contributors": [
+    "Bob Smith <bob@smith.com>"
+  ],
+  "main": "lib/index.js",
+  "engines": { "node": ">= 4.0.0" },
+  "devDependencies": {
+  },
+  "dependencies" : {
+    "carbon-io": "*",
+    "express": "4.x"
+  },
+  "scripts": {
+    "test": "node test"
+  }
+}
+

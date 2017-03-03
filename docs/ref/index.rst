@@ -8,5 +8,5 @@ Class Reference
     :maxdepth: 1
     :titlesonly:
 
-    test-tube.Test.rst
+    testtube.Test.rst
 
