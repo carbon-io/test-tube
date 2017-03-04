@@ -67,7 +67,7 @@ Test Suites
 To implement a test suite, simply override the :js:attr:`~testtube.Test.tests`
 property with an array of tests to execute:
 
-.. literalinclued:: ../code-frags/hello-world/test/simple-tests.js
+.. literalinclude:: ../code-frags/hello-world/test/simple-tests.js
   :language: js
 
 Note, as mentioned previously, a test can act both as a test suite and a test.
