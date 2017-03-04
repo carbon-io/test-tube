@@ -9,8 +9,6 @@ var testtube = carbon.testtube
 module.exports = __(function() {
   return o({
     _type: testtube.Test,
-    name: 'SimpleTest',
-    description: 'A simple test',
     setup: function() {
       // setup the environment for the test
       process.env.foo = 1
@@ -25,3 +23,4 @@ module.exports = __(function() {
     }
   })
 })
+

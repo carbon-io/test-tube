@@ -10,10 +10,10 @@ module.exports = __(function() {
     _type: testtube.Test,
     name: 'HelloWorldTestSuite',
     description: 'A test suite demonstrating Test-Tube\'s various features.',
-    doTest: function() {
-    },
     tests: [
+      _o('./simple-bare-bones-test'),
       _o('./simple-test'),
+      _o('./simple-async-test'),
       _o('./simple-tests'),
       _o('./simple-nested-tests'),
       _o('./cmdline-tests'),
