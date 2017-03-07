@@ -45,10 +45,14 @@ module.exports = __(function() {
       {
         name: 'NamedHttpTestWithSetupAndTeardown',
         setup: function() {
-          this.x = 1
+          process.env[this.name] = 1
         },
         teardown: function() {
-          assert.equal(this.x, 1)
+          try {
+            assert.equal(process.env[this.name], 1)
+          } finally {
+            delete process.env[this.name]
+          }
         },
         reqSpec: {
           url: '/say',
@@ -204,6 +208,35 @@ module.exports = __(function() {
           for (var k in prevResSpec) {
             assert.equal(res[k], prevResSpec[k])
           }
+        }
+      },
+      {
+        reqSpec: {
+          method: 'GET'
+        },
+        resSpec: {
+          statusCode: 200,
+          body: `Hello ${DEFAULT_NAME}.`
+        }
+      },
+      {
+        reqSpec: {
+          url: BASE_URL + '/say',
+          method: 'GET'
+        },
+        resSpec: {
+          statusCode: 200,
+          body: `Hello ${DEFAULT_NAME}.`
+        }
+      },
+      {
+        reqSpec: {
+          url: '/say',
+          method: 'GET'
+        },
+        resSpec: {
+          statusCode: 200,
+          body: `Hello ${DEFAULT_NAME}.`
         }
       },
     ]
