@@ -309,5 +309,51 @@ is a string, it will return the history object for the test with that name.
 Skipping Tests
 --------------
 
+Sometimes a test needs to be skipped (e.g., when a certain language feature is not
+available in the version of node being run) or marked as unimplemented. There are 
+a couple ways to do this.
 
+To skip a test, either throw an instance of
+:js:class:`~testtube.errors.SkipTestError` or instantiate an instance of
+:js:class:`~testtube.util.SkipTest`:
 
+.. literalinclude:: ../code-frags/hello-world/test/skip-tests.js
+  :language: js
+  :linenos:
+  :lines: 15-24
+
+Note, if :js:class:`~testtube.util.SkipTest` is instantiated, the
+``description`` property will be used as the ``message`` argument to 
+:js:class:`~testtube.errors.SkipTestError`.
+
+It is often common to think of tests that need to be implemented as one is
+designing a certain feature or in the midst of implementation. In these cases, a
+placeholder test can be added that indicates the test has not been implemented
+and that doesn't fail the test suite. To do this, simply add the test skeleton
+and throw a :js:class:`testtube.errors.NotImplementedError`
+
+.. literalinclude:: ../code-frags/hello-world/test/skip-tests.js
+  :language: js
+  :linenos:
+  :lines: 25-31
+
+The resulting report for the above tests should look something like:
+
+.. todo:: add coloring to reporting
+
+.. code-block:: sh
+
+  Running SkipTests...
+    [*] Test SKIPPED (0ms)
+    [*] SkipTest SKIPPED (1ms)
+    [*] Test NOT IMPLEMENTED (0ms)
+    [*] SkipTests (1ms)
+
+  Test Report
+  [*] Test: SkipTests (Demonstrate how to skip tests.) (1ms)
+    [*] Test: Test SKIPPED (0ms)
+      Skipping test because of foo
+    [*] Test: SkipTest SKIPPED (Skipping test because of foo) (1ms)
+      Skipping test because of foo
+    [*] Test: Test NOT IMPLEMENTED (0ms)
+      Implement foo

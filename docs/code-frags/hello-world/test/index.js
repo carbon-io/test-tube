@@ -18,7 +18,8 @@ module.exports = __(function() {
       _o('./simple-nested-tests'),
       _o('./cmdline-tests'),
       _o('./context-tests'),
-      _o('./http-tests')
+      _o('./http-tests'),
+      _o('./skip-tests')
     ]
   })
 })
