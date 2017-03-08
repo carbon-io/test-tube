@@ -78,6 +78,17 @@ Note, as mentioned previously, a test can act both as a test suite and a test.
 To do this, simply override :js:func:`~testtube.Test.doTest` in addition to
 :js:attr:`~testtube.Test.tests`.
 
+Back References
+---------------
+
+If access to the test suite is required by a test, the
+:js:attr:`~testtube.Test.parent` property can be used:
+
+.. literalinclude:: ../code-frags/hello-world/test/simple-nested-tests.js
+  :language: js
+  :linenos:
+  :lines: 9-
+
 Reporting
 ---------
 

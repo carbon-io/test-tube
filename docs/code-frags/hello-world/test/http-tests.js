@@ -4,7 +4,7 @@ var urlParse = require('url').parse
 var carbon = require('carbon-io')
 
 var __ = carbon.fibers.__(module).main
-var o = carbon.atom.o(module).main
+var o = carbon.atom.o(module)
 var _o = carbon.bond._o(module)
 var testtube = carbon.testtube
 
@@ -14,7 +14,7 @@ DEFAULT_NAME = 'foo'
 BASE_URL = 'http://127.0.0.1:8888'
 
 module.exports = __(function() {
-  return o({
+  return o.main({
     _type: testtube.HttpTest,
     name: 'HttpTests',
     description: 'Http tests.',

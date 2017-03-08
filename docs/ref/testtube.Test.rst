@@ -1,30 +1,37 @@
-.. class:: test-tube.Test
+.. class:: testtube.Test
     :heading:
 
 ==============
-test-tube.Test
+testtube.Test
 ==============
 
-:class:`~test-tube.Test` 
+:js:class:`~testtube.Test` is the base test class that all tests should
+instantiate and all test classes (e.g., :js:class:`~testtube.HttpTest`) should
+inherit from.
 
 Class
 -----
 
-.. class:: test-tube.Test
+.. class:: testtube.Test
 
 
 Properties
 ----------
 
-.. class:: test-tube.Test
+.. class:: testtube.Test
     :noindex:
     :hidden:
+    
+    .. attribute:: testtube.Test.tests
+
+    :type: :class:`Array`
+    :default: ``[]`` 
 
 
 Methods
 -------
 
-.. class:: test-tube.Test
+.. class:: testtube.Test
     :noindex:
     :hidden:
 

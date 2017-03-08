@@ -3,13 +3,13 @@ var assert = require('assert')
 var carbon = require('carbon-io')
 
 var __ = carbon.fibers.__(module).main
-var o = carbon.atom.o(module).main
+var o = carbon.atom.o(module)
 var testtube = carbon.testtube
 
 var HelloWorld = require('../lib/hello-world')
 
 module.exports = __(function() {
-  return o({
+  return o.main({
     _type: testtube.Test,
     name: 'CmdlineTests',
     setup: function() {

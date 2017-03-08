@@ -3,11 +3,11 @@ var assert = require('assert')
 var carbon = require('carbon-io')
 
 var __ = carbon.fibers.__(module).main
-var o = carbon.atom.o(module).main
+var o = carbon.atom.o(module)
 var testtube = carbon.testtube
 
 module.exports = __(function() {
-  return o({
+  return o.main({
     _type: testtube.Test,
     setup: function() {
       // setup the environment for the test
