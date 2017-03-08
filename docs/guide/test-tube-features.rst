@@ -180,7 +180,7 @@ used to record any state relevant to the current test. If a test contains a
 execution passes to its children and restored after their completion.
 Alternatively, the test itself can be used (i.e., ``this.foo = bar``) at the
 cost of the test suite being reentrant.  ``httpHistory`` records all previously
-executed request/response pairs in an :js:class:`testtube.HttpTest` (see:
+executed request/response pairs in a :js:class:`testtube.HttpTest` (see:
 :ref:`HttpTest <test-tube-guide-http-test>`).
 
 In addition to maintaining state for the current test,

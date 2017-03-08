@@ -39,6 +39,8 @@ In the context of our "hello-world" application (see
 
 With the corresponding directory hierarchy looking like:
 
+.. todo:: use a different example here so we don't have to keep this in sync
+
 .. code-block:: sh
 
   $> tree test
@@ -51,7 +53,8 @@ With the corresponding directory hierarchy looking like:
   ├── simple-bare-bones-test.js
   ├── simple-nested-tests.js
   ├── simple-test.js
-  └── simple-tests.js
+  ├── simple-tests.js
+  └── skip-tests.js
 
 You may have noticed a bit a boiler plate in the previous two examples:
 
