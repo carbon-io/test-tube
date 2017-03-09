@@ -8,6 +8,7 @@ var o = require('@carbon-io/atom').o(module).main
 var oo = require('@carbon-io/atom').oo(module)
 
 var SkipTestError = require('../lib/errors').SkipTestError
+var NotImplementedError = require('../lib/errors').NotImplementedError
 
 var ContextStateStashRestoreTest = oo({
   _type: '../lib/Test',
@@ -128,7 +129,14 @@ module.exports = o({
                   }
                 })
               ]
-            })
+            }),
+            o({
+              _type: '../lib/Test',
+              name: 'NotImplementedErrorTest',
+              doTest: function() {
+                throw new NotImplementedError('not implemented')
+              }
+            }),
           ]
         })
         // suppress logging in test suite being tested
@@ -153,6 +161,7 @@ module.exports = o({
         // SetupSkipTestErrorTest
         assert(result.tests[0].passed)
         assert(result.tests[0].skipped)
+        assert.equal(result.tests[0].skippedTag, SkipTestError.tag)
         assert.equal(result.tests[0].error.message,
                      this._tests.tests[0].name)
         assert(!this._tests.tests[0].doTestRan)
@@ -185,6 +194,11 @@ module.exports = o({
         assert(!result.tests[1].tests[2].skipped)
         assert(typeof result.tests[1].tests[2].error === 'undefined')
         assert(this._tests.tests[1].tests[2].doTestRan)
+        
+        // NotImplementedErrorTest
+        assert(result.tests[2].passed)
+        assert(result.tests[2].skipped)
+        assert.equal(result.tests[2].skippedTag, NotImplementedError.tag)
       }
     }),
     o({

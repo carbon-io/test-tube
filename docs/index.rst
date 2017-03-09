@@ -4,8 +4,11 @@
 Test Tube
 =========
 
-This documentation is organized into the following sections:
+Contents:
 
 .. toctree::
-   :maxdepth: 1
+    :maxdepth: 2
+
+    guide/index
+    ref/index
 

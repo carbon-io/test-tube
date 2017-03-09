@@ -70,6 +70,34 @@ UtilTests = o({
         assert.equal(result.tests[0].name, 'Bar')
         assert(_.isUndefined(result.tests[0].error))
       }
+    }),
+    o({
+      _type: Test,
+      name: 'NotImplementedTestConvenienceClassTest',
+      description: 'test the NotImplementedTest convenience class',
+      setup: function() {
+        this.sandbox = sinon.sandbox.create()
+        this.sandbox.stub(Test.prototype, '_log', function() {})
+      },
+      teardown: function() {
+        this.sandbox.restore()
+      },
+      doTest: function() {
+        var predicate = false
+        var doTest = function() {
+          var test = o({
+            _type: util.NotImplementedTest,
+            description: 'Implement Foo',
+          })
+          return test.run()
+        }
+        var result = doTest()
+        assert(result.passed)
+        assert(result.skipped)
+        assert.equal(result.name, 'NotImplementedTest')
+        assert(!_.isUndefined(result.error))
+        assert(result.error.name, 'NotImplementedError')
+      }
     })
   ]
 })

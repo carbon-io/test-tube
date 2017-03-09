@@ -8,5 +8,12 @@ Class Reference
     :maxdepth: 1
     :titlesonly:
 
-    test-tube.Test.rst
+    testtube.Test.rst
+    testtube.HttpTest.rst
+    testtube.errors.SkipTestError.rst
+    testtube.errors.NotImplementedError.rst
+    testtube.util.SkipTest.rst
+    testtube.util.NotImplementedTest.rst
+    testtube.TestContext.rst
+    testtube.HttpTestHistory.rst
 
