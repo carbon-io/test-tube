@@ -24,7 +24,7 @@ Properties
     
         :type: ``integer``
 
-        The number of saeed renuests/responses.
+        The number of saeed requests/responses.
 
 Methods
 -------
