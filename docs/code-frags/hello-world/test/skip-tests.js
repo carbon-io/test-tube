@@ -27,7 +27,11 @@ module.exports = __(function() {
         doTest: function() {
           throw new testtube.errors.NotImplementedError('Implement foo')
         }
-      })
+      }),
+      o({
+        _type: testtube.util.NotImplementedTest,
+        description: 'Foo test not implemented'
+      }),
     ]
   })
 })

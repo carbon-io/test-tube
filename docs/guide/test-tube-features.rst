@@ -385,3 +385,20 @@ Command Line
 ------------
 
 .. todo:: document command line
+
+.. code-block:: sh
+  
+ $> node test -h
+
+  Usage: node test <command> [options]
+
+  command
+    run     Run the test suite
+
+  Options:
+     --path PATH      Process tests rooted at PATH (globs allowed)
+     --include GLOB   Process tests matching GLOB (if --exclude is present, --include takes precedence, but will fall through if a test is not matched)
+     --exclude GLOB   Process tests not matching GLOB (if --include is present, --exclude will be skipped if the test is matched by the former)
+
+  Environment variables:
+    <none> 

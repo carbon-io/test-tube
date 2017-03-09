@@ -1,9 +1,9 @@
 .. class:: testtube.Test
     :heading:
 
-==============
+=============
 testtube.Test
-==============
+=============
 
 :js:class:`~testtube.Test` is the base test class that all tests should
 instantiate and all test classes (e.g., :js:class:`~testtube.HttpTest`) should
