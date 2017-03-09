@@ -89,6 +89,18 @@ If access to the test suite is required by a test, the
   :linenos:
   :lines: 9-
 
+Expecting an Error
+------------------
+
+If an error is expected to be thrown by a test, the
+:js:attr:`~testtube.Test.errorExpected` can be used to catch and verify an error
+that may be thrown anywhere in the defined test. If it is set to a ``boolean``,
+the test class will simply verify that an error was thrown or not. If it is set
+to a class or function, it will behave like :js:func:`~assert.throws`. This is
+mostly useful for meta-tests.
+
+.. todo:: example
+
 Reporting
 ---------
 
@@ -368,3 +380,8 @@ The resulting report for the above tests should look something like:
       Skipping test because of foo
     [*] Test: Test NOT IMPLEMENTED (0ms)
       Implement foo
+
+Command Line
+------------
+
+.. todo:: document command line
