@@ -10,5 +10,3 @@ Contents:
     :maxdepth: 2
 
     guide/index
-    ref/index
-
