@@ -6,8 +6,8 @@ var __ = carbon.fibers.__(module).main
 var o = carbon.atom.o(module)
 var testtube = carbon.testtube
 
-module.exports = __(function() {
-  return o.main({
+__(function() {
+  module.exports = o.main({
     _type: testtube.Test,
     name: 'SimpleNestedTests',
     description: 'A simple set of tests',
@@ -83,7 +83,7 @@ module.exports = __(function() {
                 _type: testtube.Test,
                 name: 'SimpleTripleNestedTest',
                 setup: function() {
-                  this._oldLevel = this.parent.parent.parent.level 
+                  this._oldLevel = this.parent.parent.parent.level
                   this.parent.parent.parent.level += 1
                 },
                 doTest: function() {

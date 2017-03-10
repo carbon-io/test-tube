@@ -8,8 +8,8 @@ var testtube = carbon.testtube
 
 var HelloWorld = require('../lib/hello-world')
 
-module.exports = __(function() {
-  return o.main({
+__(function() {
+  module.exports = o.main({
     _type: testtube.Test,
     name: 'CmdlineTests',
     setup: function() {

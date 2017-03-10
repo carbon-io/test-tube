@@ -6,10 +6,10 @@ var __ = carbon.fibers.__(module).main
 var o = carbon.atom.o(module)
 var testtube = carbon.testtube
 
-module.exports = __(function() {
+__(function() {
   // NOTE: if tests are nested, ensure _main is only invoked on the top
   //       level test if this is run as the main module
-  return o.main({
+  module.exports = o.main({
     _type: testtube.Test,
     name: 'SimpleContextTests',
     description: 'A simple set of tests using context',

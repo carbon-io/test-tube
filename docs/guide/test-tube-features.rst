@@ -7,6 +7,9 @@ Test-Tube Features
 Basic Tests
 -----------
 
+Synchronous
+^^^^^^^^^^^
+
 In its simplest form, a test in ``test-tube`` looks as follows:
 
 .. code-block:: js
@@ -22,8 +25,8 @@ It consists of a instance of :js:class:`~testtube.Test` with
 :js:func:`~testtube.Test.doTest` overriden to perform the actual test. To
 indicate a failure, simply throw an error. To indicate success, don't.
 
-Basic Async Tests
------------------
+Asynchronous
+^^^^^^^^^^^^
 
 If a test is asynchronous, use the ``done`` errback to indicate the test 
 has completed:

@@ -13,16 +13,16 @@ var HelloWorld = require('../lib/hello-world')
 DEFAULT_NAME = 'foo'
 BASE_URL = 'http://127.0.0.1:8888'
 
-module.exports = __(function() {
-  return o.main({
+__(function() {
+  module.exports = o.main({
     _type: testtube.HttpTest,
     name: 'HttpTests',
     description: 'Http tests.',
-    baseUrl: BASE_URL, 
+    baseUrl: BASE_URL,
     setup: function(_, done) {
       var parsedUrl = urlParse(this.baseUrl)
       this.server = new HelloWorld(
-        parsedUrl.hostname, 
+        parsedUrl.hostname,
         parsedUrl.port,
         DEFAULT_NAME)
       this.server.serve({}, done)
@@ -133,7 +133,7 @@ module.exports = __(function() {
           return context.httpHistory.getReqSpec('NamedHttpTestWithSetupAndTeardown')
         },
         resSpec: function(res, context) {
-          var prevResSpec = 
+          var prevResSpec =
             context.httpHistory.getResSpec('NamedHttpTestWithSetupAndTeardown')
           for (var k in prevResSpec) {
             assert.equal(res[k], prevResSpec[k])
@@ -183,7 +183,7 @@ module.exports = __(function() {
               return context.httpHistory.getReqSpec('NestedNamedHttpTest')
             },
             resSpec: function(res, context) {
-              var prevResSpec = 
+              var prevResSpec =
                 context.httpHistory.getResSpec('NestedNamedHttpTest')
               for (var k in prevResSpec) {
                 assert.equal(res[k], prevResSpec[k])
@@ -203,7 +203,7 @@ module.exports = __(function() {
           return context.httpHistory.getReqSpec('SimpleNamedHttpHistoryTest')
         },
         resSpec: function(res, context) {
-          var prevResSpec = 
+          var prevResSpec =
             context.httpHistory.getResSpec('SimpleNamedHttpHistoryTest')
           for (var k in prevResSpec) {
             assert.equal(res[k], prevResSpec[k])
