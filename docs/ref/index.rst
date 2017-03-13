@@ -1,8 +1,8 @@
 .. _test-tube-class-ref:
 
-===============
-Class Reference
-===============
+=========================
+Test tube class reference
+=========================
 
 .. toctree::
     :maxdepth: 1
