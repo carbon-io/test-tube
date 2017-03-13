@@ -1,9 +1,9 @@
 .. class:: testtube.TestContext
     :heading:
 
-==============
+====================
 testtube.TestContext
-==============
+====================
 
 The :js:class:`~testtube.TestContext` class is used to manage state within and
 across tests and allow for the test tree to be reentrant.

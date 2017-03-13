@@ -1,7 +1,7 @@
 .. _test-tube-class-ref:
 
 =========================
-Test tube class reference
+Test-Tube class reference
 =========================
 
 .. toctree::

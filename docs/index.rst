@@ -1,8 +1,6 @@
-.. _test-tube-docs:
-
-=========
-Test Tube
-=========
+=====================================
+Welcome to Test-Tube's documentation!
+=====================================
 
 Contents:
 
@@ -10,3 +8,4 @@ Contents:
     :maxdepth: 2
 
     guide/index
+    ref/index

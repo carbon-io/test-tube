@@ -1,9 +1,9 @@
 .. class:: testtube.HttpTest
     :heading:
 
-==============
+=================
 testtube.HttpTest
-==============
+=================
 
 :js:class:`~testtube.HttpTest` extends :js:class:`~testtube.Test` to make it
 easier to write unit tests for ``http`` based services.

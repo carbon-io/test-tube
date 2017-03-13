@@ -1,9 +1,9 @@
 .. class:: testtube.errors.NotImplementedError
     :heading:
 
-==============
+===================================
 testtube.errors.NotImplementedError
-==============
+===================================
 
 :class:`~testtube.errors.NotImplementedError` should be thrown to indicate that
 a particular test has not yet been implemented. Tests throwing this error will

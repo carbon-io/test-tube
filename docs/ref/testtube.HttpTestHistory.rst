@@ -1,9 +1,9 @@
 .. class:: testtube.HttpTestHistory
     :heading:
 
-==============
+========================
 testtube.HttpTestHistory
-==============
+========================
 
 :js:class:`~testtube.HttpTestHistory` manages ``http`` request and response history for a :js:class:`~testtube.HttpTest`.
 

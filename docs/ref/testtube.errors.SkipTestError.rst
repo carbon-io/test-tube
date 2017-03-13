@@ -1,9 +1,9 @@
 .. class:: testtube.errors.SkipTestError
     :heading:
 
-==============
+=============================
 testtube.errors.SkipTestError
-==============
+=============================
 
 :class:`~testtube.errors.SkipTestError` should be thrown to indicate that a test
 should be skipped. Tests throwing this error will succeed, but will be
