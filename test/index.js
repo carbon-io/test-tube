@@ -12,7 +12,7 @@ __(function() {
       _o('./OrderingTests'),
       _o('./HttpTestTests'),
       _o('./UtilTests'),
-      _o('../docs/code-frags/test')
+      //_o('../docs/code-frags/test')
     ]
   })
 })

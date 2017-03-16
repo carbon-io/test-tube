@@ -226,12 +226,12 @@ var HttpTestTests = o({
       name: 'httpHistoryStashRestoreTest',
       baseUrl: "http://pastebin.com/raw",
       setup: function(context) {
-        this.statesLength = context.__testtube.states.length
+        this.statesLength = context.__testtube.localStateStack.length
         assert(this.statesLength >= 0)
         assert.equal(context.httpHistory.length, 0)
       },
       teardown: function(context) {
-        assert.equal(context.__testtube.states.length, 
+        assert.equal(context.__testtube.localStateStack.length, 
                      this.statesLength)
         assert.equal(context.httpHistory.length, 2)
       },
@@ -251,12 +251,12 @@ var HttpTestTests = o({
           name: 'subHttpHistoryStashRestoreTest',
           baseUrl: "http://pastebin.com/raw",
           setup: function(context) {
-            this.statesLength = context.__testtube.states.length
+            this.statesLength = context.__testtube.localStateStack.length
             assert(this.statesLength > this.parent.statesLength)
             assert.equal(context.httpHistory.length, 0)
           },
           teardown: function(context) {
-            assert.equal(context.__testtube.states.length, this.statesLength)
+            assert.equal(context.__testtube.localStateStack.length, this.statesLength)
             assert.equal(context.httpHistory.length, 2)
           },
           tests: [

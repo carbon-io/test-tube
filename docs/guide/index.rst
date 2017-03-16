@@ -319,10 +319,10 @@ running the "hello-world" test suite looks as follows:
           Foo test not implemented
 
 In order to make this report more descriptive, there are two other properties of
-:js:class:`~testtube.Test` that can be overridden: :js:attr:`~testtube.Test.name`
-and :js:attr:`~testtube.Test.description`. If 
-:js:attr:`~testtube.Test.name` is not overriden, the test will be given the default name of
-``Test`` (e.g., ``[*] Test: Test (0ms)``). If
+:js:class:`~testtube.Test` that can be overridden:
+:js:attr:`~testtube.Test.name` and :js:attr:`~testtube.Test.description`. If
+:js:attr:`~testtube.Test.name` is not overriden, the test will be given the
+default name of ``Test`` (e.g., ``[*] Test: Test (0ms)``). If
 :js:attr:`~testtube.Test.description` is overridden, it will be appended to the
 report output for that test in parentheses (e.g., ``[*] Test: SimpleTest (A
 simple test) (0ms)``).
@@ -343,26 +343,27 @@ test's ``setup``, ``teardown``, and ``doTest`` mthods.
   :lines: 36-53
 
 The test context class (see: :js:class:`~testtube.TestContext`) has two
-important/reserved properties: ``state`` and ``httpHistory``. ``state`` can be
-used to record any state relevant to the current test. If a test contains a
-``tests`` property with more tests, the current state will be saved when
-execution passes to its children and restored after their completion.
+important/reserved properties: ``global``, ``local``, and ``httpHistory``.
+``local`` can be used to record any state relevant to the current test. If a
+test contains a ``tests`` property with more tests, the current state will be
+saved when execution passes to its children and restored after their completion.
 Alternatively, the test itself can be used (i.e., ``this.foo = bar``) at the
 cost of the test suite being reentrant.  ``httpHistory`` records all previously
 executed request/response pairs in a :js:class:`testtube.HttpTest` (see:
 :ref:`HttpTest <test-tube-guide-http-test>`).
 
 In addition to maintaining state for the current test,
-:js:class:`~testtube.HttpTest` can be used to communicate or collect other state
-throughout the test suite. Simply attach data to the context object and it will
-be passed down through the tree untouched by ``test-tube``.
+:js:class:`~testtube.TestContext` can be used to communicate or collect other
+state throughout the test suite. Simply attach data to the context object's
+``global`` property and it will be passed down through the tree untouched by
+``test-tube``.
 
-The following example demonstrates the use of ``state`` by saving the
-current test's name on ``state`` in ``setup`` and verifying that it persists
-through ``teardown`` despite the presence of child tests. It also demonstrates
-the sharing of state using the context object by recording the name of each test
-that has executed on the ``testNames`` property and verifying that this persists
-all the way back up to the root.
+The following example demonstrates the use of ``local`` by saving the current
+test's name on ``local`` in ``setup`` and verifying that it persists through
+``teardown`` despite the presence of child tests. It also demonstrates the
+sharing of state using the context object by recording the name of each test
+that has executed on the ``global.testNames`` property and verifying that this
+persists all the way back up to the root.
 
 .. literalinclude:: ../code-frags/hello-world/test/ContextTests.js
   :language: js

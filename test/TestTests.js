@@ -12,26 +12,26 @@ var NotImplementedError = require('../lib/errors').NotImplementedError
 
 var ContextStateStashRestoreTest = oo({
   _type: '../lib/Test',
-  description: 'Test that context state is stashed and restored',
+  description: 'Test that context local is stashed and restored',
   setup: function(context) {
-    assert.equal(_.keys(context.state).length, 0)
-    context.state.foo = this.name
+    assert.equal(_.keys(context.local).length, 0)
+    context.local.foo = this.name
   },
   teardown: function(context) {
-    assert.equal(_.keys(context.state).length, 2)
-    assert.equal(_.intersection(_.keys(context.state),
+    assert.equal(_.keys(context.local).length, 2)
+    assert.equal(_.intersection(_.keys(context.local),
                                 ['foo', 'bar']).length,
                  2)
-    assert.equal(context.state.foo, this.name)
-    assert.equal(context.state.bar, this.name)
+    assert.equal(context.local.foo, this.name)
+    assert.equal(context.local.bar, this.name)
   },
   doTest: function(context) {
-    assert.equal(_.keys(context.state).length, 1)
-    assert.equal(_.intersection(_.keys(context.state),
+    assert.equal(_.keys(context.local).length, 1)
+    assert.equal(_.intersection(_.keys(context.local),
                                 ['foo']).length,
                  1)
-    assert.equal(context.state.foo, this.name)
-    context.state.bar = this.name
+    assert.equal(context.local.foo, this.name)
+    context.local.bar = this.name
   },
 })
 

@@ -21,12 +21,20 @@ Properties
     :noindex:
     :hidden:
 
-    .. attribute:: testtube.TestContext.state
+    .. attribute:: testtube.TestContext.global
 
         :type: ``object``
         :default: ``{}`` 
 
-        The ``state`` property should be used to manage state in the context of
+        The ``global`` property should be used to manage state across multiple
+        tests.
+
+    .. attribute:: testtube.TestContext.local
+
+        :type: ``object``
+        :default: ``{}`` 
+
+        The ``local`` property should be used to manage state in the context of
         a single test.
 
     .. attribute:: testtube.TestContext.httpHistory
