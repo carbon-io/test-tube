@@ -80,18 +80,18 @@ With the corresponding directory hierarchy looking like:
 
 .. code-block:: sh
 
-  $> tree test
-  test
-  ├── cmdline-tests.js
-  ├── context-tests.js
-  ├── http-tests.js
-  ├── index.js
-  ├── simple-async-test.js
-  ├── simple-bare-bones-test.js
-  ├── simple-nested-tests.js
-  ├── simple-test.js
-  ├── simple-tests.js
-  └── skip-tests.js
+    $> tree test
+    test
+    ├── CmdlineTests.js
+    ├── ContextTests.js
+    ├── HttpTests.js
+    ├── SimpleAsyncTest.js
+    ├── SimpleBareBonesTest.js
+    ├── SimpleNestedTests.js
+    ├── SimpleTest.js
+    ├── SimpleTests.js
+    ├── SkipTests.js
+    └── index.js
 
 You may have noticed a bit a boiler plate in the previous two examples:
 
@@ -169,14 +169,14 @@ In addition to :js:func:`~testtube.Test.doTest`, test classes have ``setup`` and
 ``teardown`` methods that can be used to create fixtures expected by the test
 and perform any cleanup required after the test has completed:
 
-.. literalinclude:: ../code-frags/hello-world/test/simple-test.js
+.. literalinclude:: ../code-frags/hello-world/test/SimpleTest.js
   :language: js
   :linenos:
 
 Note, ``setup`` and ``teardown`` have the same signature as ``doTest``, so, if
 something needs to be done asynchronously, simply use the supplied errback:
 
-.. literalinclude:: ../code-frags/hello-world/test/simple-async-test.js
+.. literalinclude:: ../code-frags/hello-world/test/SimpleAsyncTest.js
   :language: js
   :linenos:
 
@@ -186,7 +186,7 @@ Test Suites
 To implement a test suite, simply override the :js:attr:`~testtube.Test.tests`
 property with an array of tests to execute:
 
-.. literalinclude:: ../code-frags/hello-world/test/simple-tests.js
+.. literalinclude:: ../code-frags/hello-world/test/SimpleTests.js
   :language: js
   :linenos:
 
@@ -200,7 +200,7 @@ Back References
 If access to the test suite is required by a test, the
 :js:attr:`~testtube.Test.parent` property can be used:
 
-.. literalinclude:: ../code-frags/hello-world/test/simple-nested-tests.js
+.. literalinclude:: ../code-frags/hello-world/test/SimpleNestedTests.js
   :language: js
   :linenos:
   :lines: 9-
@@ -230,63 +230,93 @@ running the "hello-world" test suite looks as follows:
 
   $> npm test
 
-  Running HelloWorldTestSuite...
-    [*] Test (0ms)
-    [*] SimpleTest (0ms)
-    [*] SimpleAsyncTest (1ms)
-    [*] SimpleWithSetupAndTeardownTest (0ms)
-    [*] SimpleAsyncTest (0ms)
-    [*] SimpleAsyncWithSetupAndTeardownTest (0ms)
-    [*] SimpleTests (0ms)
-    [*] SimpleTripleNestedTest (0ms)
-    [*] SimpleDoubleNestedAsyncTest (1ms)
-    [*] SimpleNestedTest (1ms)
-    [*] SimpleNestedTests (1ms)
-    [*] CmdlineTests (5ms)
-    [*] ContextTests (0ms)
-    [*] GET /say (86ms)
-    [*] NamedHttpTestWithSetupAndTeardown (23ms)
-    [*] ReqResSpecFunctionTests (4ms)
-    [*] ReqResSpecFunctionTests (4ms)
-    [*] GET /say (3ms)
-    [*] SimpleReverseHttpHistoryTest (8ms)
-    [*] SimpleForwardHttpHistoryTest (7ms)
-    [*] SimpleNamedHttpHistoryTest (14ms)
-    [*] NestedNamedHttpTest (17ms)
-    [*] undefined undefined (15ms)
-    [*] NestedHttpTest (32ms)
-    [*] SimpleNamedHttpHistoryTest2 (6ms)
-    [*] HttpTests (187ms)
-    [*] HelloWorldTestSuite (194ms)
+    Running HelloWorldTestSuite...
+      [*] Test (0ms)
+      [*] SimpleTest (0ms)
+      [*] SimpleAsyncTest (0ms)
+      [*] SimpleWithSetupAndTeardownTest (0ms)
+      [*] SimpleAsyncTest (1ms)
+      [*] SimpleAsyncWithSetupAndTeardownTest (1ms)
+      [*] SimpleTests (2ms)
+      [*] SimpleTripleNestedTest (0ms)
+      [*] SimpleDoubleNestedAsyncTest (0ms)
+      [*] SimpleNestedTest (0ms)
+      [*] SimpleNestedTests (0ms)
+      [*] CmdlineTests (10ms)
+      [*] SimpleContextTest (0ms)
+      [*] SimpleNestedTestWithContextTest1 (1ms)
+      [*] SimpleNestedTestWithContextTest2 (0ms)
+      [*] SimpleNestedTestsWithContextTest (1ms)
+      [*] SimpleAsyncContextTest (1ms)
+      [*] SimpleContextTests (2ms)
+      [*] GET /say (86ms)
+      [*] NamedHttpTestWithSetupAndTeardown (16ms)
+      [*] ReqResSpecFunctionTests (7ms)
+      [*] ReqResSpecFunctionTests (6ms)
+      [*] GET /say (5ms)
+      [*] SimpleReverseHttpHistoryTest (9ms)
+      [*] SimpleForwardHttpHistoryTest (4ms)
+      [*] SimpleNamedHttpHistoryTest (10ms)
+      [*] NestedNamedHttpTest (4ms)
+      [*] undefined undefined (11ms)
+      [*] NestedHttpTest (15ms)
+      [*] SimpleNamedHttpHistoryTest2 (9ms)
+      [*] GET undefined (60ms)
+      [*] GET http://127.0.0.1:8888/say (8ms)
+      [*] GET /say (8ms)
+      [*] HttpTests (243ms)
+      [*] Test SKIPPED (0ms)
+      [*] SkipTest SKIPPED (0ms)
+      [*] Test NOT IMPLEMENTED (1ms)
+      [*] NotImplementedTest NOT IMPLEMENTED (0ms)
+      [*] SkipTests (1ms)
+      [*] HelloWorldTestSuite (258ms)
 
-  Test Report
-  [*] Test: HelloWorldTestSuite (A test suite demonstrating Test-Tube's various features.) (194ms)
-    [*] Test: Test (0ms)
-    [*] Test: SimpleTest (A simple test) (0ms)
-    [*] Test: SimpleAsyncTest (A simple async test) (1ms)
-    [*] Test: SimpleTests (A simple set of tests) (0ms)
-      [*] Test: SimpleWithSetupAndTeardownTest (0ms)
-      [*] Test: SimpleAsyncTest (0ms)
-      [*] Test: SimpleAsyncWithSetupAndTeardownTest (0ms)
-    [*] Test: SimpleNestedTests (A simple set of tests) (1ms)
-      [*] Test: SimpleNestedTest (1ms)
-        [*] Test: SimpleDoubleNestedAsyncTest (1ms)
-          [*] Test: SimpleTripleNestedTest (0ms)
-    [*] Test: CmdlineTests (5ms)
-    [*] Test: ContextTests (0ms)
-    [*] Test: HttpTests (Http tests.) (187ms)
-      [*] Test: GET /say (86ms)
-      [*] Test: NamedHttpTestWithSetupAndTeardown (23ms)
-      [*] Test: ReqResSpecFunctionTests (4ms)
-      [*] Test: ReqResSpecFunctionTests (4ms)
-      [*] Test: GET /say (3ms)
-      [*] Test: SimpleReverseHttpHistoryTest (8ms)
-      [*] Test: SimpleForwardHttpHistoryTest (7ms)
-      [*] Test: SimpleNamedHttpHistoryTest (14ms)
-      [*] Test: NestedHttpTest (32ms)
-        [*] Test: NestedNamedHttpTest (17ms)
-        [*] Test: undefined undefined (15ms)
-      [*] Test: SimpleNamedHttpHistoryTest2 (6ms)
+    Test Report
+      [*] Test: HelloWorldTestSuite (A test suite demonstrating Test-Tube's various features.) (258ms)
+      [*] Test: Test (0ms)
+      [*] Test: SimpleTest (A simple test) (0ms)
+      [*] Test: SimpleAsyncTest (A simple async test) (0ms)
+      [*] Test: SimpleTests (A simple set of tests) (2ms)
+        [*] Test: SimpleWithSetupAndTeardownTest (0ms)
+        [*] Test: SimpleAsyncTest (1ms)
+        [*] Test: SimpleAsyncWithSetupAndTeardownTest (1ms)
+      [*] Test: SimpleNestedTests (A simple set of tests) (0ms)
+        [*] Test: SimpleNestedTest (0ms)
+          [*] Test: SimpleDoubleNestedAsyncTest (0ms)
+            [*] Test: SimpleTripleNestedTest (0ms)
+      [*] Test: CmdlineTests (10ms)
+      [*] Test: SimpleContextTests (A simple set of tests using context) (2ms)
+        [*] Test: SimpleContextTest (0ms)
+        [*] Test: SimpleNestedTestsWithContextTest (1ms)
+          [*] Test: SimpleNestedTestWithContextTest1 (1ms)
+          [*] Test: SimpleNestedTestWithContextTest2 (0ms)
+        [*] Test: SimpleAsyncContextTest (1ms)
+      [*] Test: HttpTests (Http tests.) (243ms)
+        [*] Test: GET /say (86ms)
+        [*] Test: NamedHttpTestWithSetupAndTeardown (16ms)
+        [*] Test: ReqResSpecFunctionTests (7ms)
+        [*] Test: ReqResSpecFunctionTests (6ms)
+        [*] Test: GET /say (5ms)
+        [*] Test: SimpleReverseHttpHistoryTest (9ms)
+        [*] Test: SimpleForwardHttpHistoryTest (4ms)
+        [*] Test: SimpleNamedHttpHistoryTest (10ms)
+        [*] Test: NestedHttpTest (15ms)
+          [*] Test: NestedNamedHttpTest (4ms)
+          [*] Test: undefined undefined (11ms)
+        [*] Test: SimpleNamedHttpHistoryTest2 (9ms)
+        [*] Test: GET undefined (60ms)
+        [*] Test: GET http://127.0.0.1:8888/say (8ms)
+        [*] Test: GET /say (8ms)
+      [*] Test: SkipTests (Demonstrate how to skip tests.) (1ms)
+        [*] Test: Test SKIPPED (0ms)
+          Skipping test because of foo
+        [*] Test: SkipTest SKIPPED (Skipping test because of foo) (0ms)
+          Skipping test because of foo
+        [*] Test: Test NOT IMPLEMENTED (1ms)
+          Implement foo
+        [*] Test: NotImplementedTest NOT IMPLEMENTED (Foo test not implemented) (0ms)
+          Foo test not implemented
 
 In order to make this report more descriptive, there are two other properties of
 :js:class:`~testtube.Test` that can be overridden: :js:attr:`~testtube.Test.name`
@@ -307,7 +337,7 @@ In order to make test suites reentrant, ``test-tube`` provides a context object
 that is passed down through the execution tree as the first argument to each
 test's ``setup``, ``teardown``, and ``doTest`` mthods. 
 
-.. literalinclude:: ../code-frags/hello-world/test/context-tests.js
+.. literalinclude:: ../code-frags/hello-world/test/ContextTests.js
   :language: js
   :linenos:
   :lines: 36-53
@@ -334,7 +364,7 @@ the sharing of state using the context object by recording the name of each test
 that has executed on the ``testNames`` property and verifying that this persists
 all the way back up to the root.
 
-.. literalinclude:: ../code-frags/hello-world/test/context-tests.js
+.. literalinclude:: ../code-frags/hello-world/test/ContextTests.js
   :language: js
   :linenos:
   :lines: 9-
@@ -382,7 +412,7 @@ to probe can be specified using the ``url`` property as an absolute
 ``URL`` (containing the scheme, host, path, etc.) or as a relative ``URL`` (to
 be appended to the aforementioned ``baseUrl`` property of the parent test). 
 
-.. literalinclude:: ../code-frags/hello-world/test/http-tests.js
+.. literalinclude:: ../code-frags/hello-world/test/HttpTests.js
   :language: js
   :linenos:
   :lines: 13-34,214-
@@ -390,7 +420,7 @@ be appended to the aforementioned ``baseUrl`` property of the parent test).
 In addition to these two properties, ``name``, ``setup``, and ``teardown`` are
 also valid and perform the same functions described in previous sections.
 
-.. literalinclude:: ../code-frags/hello-world/test/http-tests.js
+.. literalinclude:: ../code-frags/hello-world/test/HttpTests.js
   :language: js
   :linenos:
   :lines: 13-34,46-65,242-
@@ -399,7 +429,7 @@ If ``reqSpec`` is a function, it will be bound to the test instance, called
 with the context object as the first argument, and should return a ``refSpec`` as
 described above.
 
-.. literalinclude:: ../code-frags/hello-world/test/http-tests.js
+.. literalinclude:: ../code-frags/hello-world/test/HttpTests.js
   :language: js
   :linenos:
   :lines: 66-78
@@ -419,7 +449,7 @@ function in the ``resSpec`` will bound to the test instance and called with the
 corresponding value of the response object as the first argument and the context
 object as the second.
 
-.. literalinclude:: ../code-frags/hello-world/test/http-tests.js
+.. literalinclude:: ../code-frags/hello-world/test/HttpTests.js
   :language: js
   :linenos:
   :lines: 79-95
@@ -440,7 +470,7 @@ postive it starts from the Nth history object starting from the beginning (e.g.
 ``0`` would return the history object for the first test). Finally, if the index
 is a string, it will return the history object for the test with that name.
 
-.. literalinclude:: ../code-frags/hello-world/test/http-tests.js
+.. literalinclude:: ../code-frags/hello-world/test/HttpTests.js
   :language: js
   :linenos:
   :lines: 106-142
@@ -456,7 +486,7 @@ To skip a test, either throw an instance of
 :js:class:`~testtube.errors.SkipTestError` or instantiate an instance of
 :js:class:`~testtube.util.SkipTest`:
 
-.. literalinclude:: ../code-frags/hello-world/test/skip-tests.js
+.. literalinclude:: ../code-frags/hello-world/test/SkipTests.js
   :language: js
   :linenos:
   :lines: 15-24
@@ -471,7 +501,7 @@ placeholder test can be added that indicates the test has not been implemented
 and that doesn't fail the test suite. To do this, simply add the test skeleton
 and throw a :js:class:`testtube.errors.NotImplementedError`
 
-.. literalinclude:: ../code-frags/hello-world/test/skip-tests.js
+.. literalinclude:: ../code-frags/hello-world/test/SkipTests.js
   :language: js
   :linenos:
   :lines: 25-31
