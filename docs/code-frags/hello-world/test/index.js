@@ -11,15 +11,15 @@ var testtube = carbon.testtube
     name: 'HelloWorldTestSuite',
     description: 'A test suite demonstrating Test-Tube\'s various features.',
     tests: [
-      _o('./simple-bare-bones-test'),
-      _o('./simple-test'),
-      _o('./simple-async-test'),
-      _o('./simple-tests'),
-      _o('./simple-nested-tests'),
-      _o('./cmdline-tests'),
-      _o('./context-tests'),
-      _o('./http-tests'),
-      _o('./skip-tests')
+      _o('./SimpleBareBonesTest'),
+      _o('./SimpleTest'),
+      _o('./SimpleAsyncTest'),
+      _o('./SimpleTests'),
+      _o('./SimpleNestedTests'),
+      _o('./CmdlineTests'),
+      _o('./ContextTests'),
+      _o('./HttpTests'),
+      _o('./SkipTests')
     ]
   })
 })
