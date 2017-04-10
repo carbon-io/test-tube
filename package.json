@@ -1,6 +1,6 @@
 {
   "name": "@carbon-io/test-tube",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "description": "Test framework for Carbon.io",
   "keywords": ["carbon-io"],
   "contributors": [
@@ -19,10 +19,10 @@
     "express": "4.x"
   },
   "dependencies" : {
-    "@carbon-io/atom": "0.6.x",
-    "@carbon-io/bond": "0.5.x",
-    "@carbon-io/fibers": "0.6.x",
-    "@carbon-io/ejson": "0.4.x",
+    "@carbon-io/atom": "0.7.x",
+    "@carbon-io/bond": "0.6.x",
+    "@carbon-io/fibers": "0.7.x",
+    "@carbon-io/ejson": "0.5.x",
     "@carbon-io/http-errors": "0.1.x",
     "lodash" : "4.5.x",
     "colour": "0.7.x",
