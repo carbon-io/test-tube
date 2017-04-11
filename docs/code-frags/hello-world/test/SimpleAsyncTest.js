@@ -2,7 +2,7 @@ var assert = require('assert')
 
 var carbon = require('carbon-io')
 
-var __ = carbon.fibers.__(module).main
+var __ = carbon.fibers.__(module)
 var o = carbon.atom.o(module)
 var testtube = carbon.testtube
 

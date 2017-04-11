@@ -5,7 +5,7 @@ var o = atom.o(module)
 var bond = require('@carbon-io/bond')
 var _o = bond._o(module)
 var fibers = require('@carbon-io/fibers')
-var __ = fibers.__(module).main
+var __ = fibers.__(module)
 var testtube = require('../../../lib')
 
 var carbonioMock = {
