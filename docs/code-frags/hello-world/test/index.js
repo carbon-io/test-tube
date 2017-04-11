@@ -1,5 +1,3 @@
-debugger
-
 var carbon = require('carbon-io')
 
 var __ = carbon.fibers.__(module).main
