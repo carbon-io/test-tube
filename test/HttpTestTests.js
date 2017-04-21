@@ -1,16 +1,22 @@
 var assert = require('assert')
+var urlResolve = require('url').resolve
 
 var _ = require('lodash')
+var nock = require('nock')
 var sinon = require('sinon')
 
 var __ = require('@carbon-io/fibers').__(module)
 var _o = require('@carbon-io/bond')._o(module)
 var o = require('@carbon-io/atom').o(module)
 
+var HttpTest = require('../lib/HttpTest')
+
 /******************************************************************************
  * HttpTestTests
  */
-var url = "http://pastebin.com/raw/ewNZGrjd"
+var baseUrl = "http://pastebin.com"
+var path = "/raw/ewNZGrjd"
+var url = urlResolve(baseUrl, path)
 
 __(function() {
   var HttpTestTests = o.main({
@@ -18,7 +24,7 @@ __(function() {
     /**********************************************************************
      * _type
      */
-    _type: '../lib/HttpTest',
+    _type: HttpTest,
 
     /**********************************************************************
      * name
@@ -28,7 +34,23 @@ __(function() {
     /**********************************************************************
      * baseUrl
      */
-    baseUrl: "http://pastebin.com/raw",
+    baseUrl: baseUrl,
+
+    /**********************************************************************
+     * setup
+     */
+    setup: function(ctx, done) {
+      HttpTest.prototype.setup.call(this, ctx, done)
+      nock.disableNetConnect()
+    },
+
+    /**********************************************************************
+     * teardown
+     */
+    teardown: function(ctx, done) {
+      nock.enableNetConnect()
+      HttpTest.prototype.teardown.call(this, ctx, done)
+    },
 
     /**********************************************************************
      * tests
@@ -36,6 +58,20 @@ __(function() {
     tests: [
       {
         name: 'namedTest',
+        setup: function() {
+          this.scope = nock(baseUrl).get(path).reply(200, {
+            a: 1,
+            b: "hello",
+            c: [ true, false ]
+          })
+        },
+        teardown: function() {
+          try {
+            this.scope.done()
+          } finally {
+            nock.cleanAll()
+          }
+        },
         reqSpec: {
           url: url,
           method: "GET"
@@ -50,35 +86,77 @@ __(function() {
         }
       },
       {
+        setup: function() {
+          this.scope = nock(baseUrl).get(path).reply(200, {
+            a: 1,
+            b: "hello",
+            c: [ true, false ]
+          })
+        },
+        teardown: function() {
+          try {
+            this.scope.done()
+          } finally {
+            nock.cleanAll()
+          }
+        },
         reqSpec: {
-          url: "/ewNZGrjd",
+          url: path,
           method: "GET"
         },
         resSpec: {
           statusCode: function(statusCode) {
-            assert.equal(this.parent, HttpTestTests)
+            assert.equal(this.parent.name, 'HttpTestTests')
             assert.equal(statusCode, 200)
           },
           body: {
             a: 1,
             b: "hello",
             c: [ true, false ]
-          }
+          },
         }
       },
       {
+        setup: function() {
+          this.scope = nock(baseUrl).get(path).reply(200, {
+            a: 1,
+            b: "hello",
+            c: [ true, false ]
+          })
+        },
+        teardown: function() {
+          try {
+            this.scope.done()
+          } finally {
+            nock.cleanAll()
+          }
+        },
         reqSpec: {
           url: url,
           method: "GET"
         },
         resSpec: function(res) {
-          assert.equal(this.parent, HttpTestTests)
+          assert.equal(this.parent.name, 'HttpTestTests')
           assert.equal(res.statusCode, 200)
         },
       },
       {
+        setup: function() {
+          this.scope = nock(baseUrl).get(path).reply(200, {
+            a: 1,
+            b: "hello",
+            c: [ true, false ]
+          })
+        },
+        teardown: function() {
+          try {
+            this.scope.done()
+          } finally {
+            nock.cleanAll()
+          }
+        },
         reqSpec: function(context) {
-          assert.equal(this.parent, HttpTestTests)
+          assert.equal(this.parent.name, 'HttpTestTests')
           assert(context.httpHistory.getRes(-1).body.a === 1)
           return {
             url: url,
@@ -91,6 +169,16 @@ __(function() {
       },
       {
         name: 'doesNotExistTest',
+        setup: function() {
+          this.scope = nock(baseUrl).get('/doesnotexist').reply(404)
+        },
+        teardown: function() {
+          try {
+            this.scope.done()
+          } finally {
+            nock.cleanAll()
+          }
+        },
         reqSpec: {
           url: "/doesnotexist",
           method: "GET"
@@ -101,6 +189,16 @@ __(function() {
       },
       {
         name: 'reqResHistoryTest',
+        setup: function() {
+          this.scope = nock(baseUrl).get('/doesnotexist').reply(404)
+        },
+        teardown: function() {
+          try {
+            this.scope.done()
+          } finally {
+            nock.cleanAll()
+          }
+        },
         reqSpec: function(context) {
           var req = context.httpHistory.getReqSpec('namedTest')
           assert.deepEqual(context.httpHistory.getReqSpec(0), req)
@@ -109,9 +207,10 @@ __(function() {
           reqSpec = context.httpHistory.getReqSpec(-1)
           assert.equal(reqSpec.url, this.parent.baseUrl + '/doesnotexist')
           req = context.httpHistory.getReq(-1)
-          assert(req.finished)
+          // XXX: the request doesn't appear to get updated when using nock
+          // assert(req.finished)
+          // assert.equal(req.method, 'GET')
           assert.equal(req.path, '/doesnotexist')
-          assert.equal(req.method, 'GET')
           return reqSpec
         },
         resSpec: function(response, context) {
@@ -162,6 +261,16 @@ __(function() {
         name: 'testReqSpecFunctionNoBaseUrl',
         tests: [
           {
+            setup: function() {
+              this.scope = nock(baseUrl).get(path).reply(200)
+            },
+            teardown: function() {
+              try {
+                this.scope.done()
+              } finally {
+                nock.cleanAll()
+              }
+            },
             reqSpec: function() {
               return {
                 url: url,
@@ -180,8 +289,18 @@ __(function() {
         description: 'HttpTest child test setup/teardown hooks test',
         setup: function() {
           this.sandbox = sinon.sandbox.create()
+          this.scope = nock(baseUrl).get(path).reply(200, {
+            a: 1,
+            b: "hello",
+            c: [ true, false ]
+          })
         },
         teardown: function() {
+          try {
+            this.scope.done()
+          } finally {
+            nock.cleanAll()
+          }
           this.sandbox.restore()
         },
         doTest: function() {
@@ -225,13 +344,22 @@ __(function() {
       o({
         _type: '../lib/HttpTest',
         name: 'httpHistoryStashRestoreTest',
-        baseUrl: "http://pastebin.com/raw",
+        baseUrl: baseUrl,
         setup: function(context) {
           this.statesLength = context.__testtube.localStateStack.length
           assert(this.statesLength >= 0)
           assert.equal(context.httpHistory.length, 0)
+          this.scope = nock(baseUrl).get(path).times(4).reply(200)
+          this.scope.get(function(uri) {
+            return uri !== url
+          }).optionally().reply(404)
         },
         teardown: function(context) {
+          try {
+            this.scope.done()
+          } finally {
+            nock.cleanAll()
+          }
           assert.equal(context.__testtube.localStateStack.length,
                        this.statesLength)
           assert.equal(context.httpHistory.length, 2)
@@ -240,7 +368,7 @@ __(function() {
           {
             name: 'firstFirstLevelHttpHistoryStashRestoreTest',
             reqSpec: {
-              url: '/ewNZGrjd',
+              url: path,
               method: 'GET'
             },
             resSpec: {
@@ -250,7 +378,7 @@ __(function() {
           o({
             _type: '../lib/HttpTest',
             name: 'subHttpHistoryStashRestoreTest',
-            baseUrl: "http://pastebin.com/raw",
+            baseUrl: baseUrl,
             setup: function(context) {
               this.statesLength = context.__testtube.localStateStack.length
               assert(this.statesLength > this.parent.statesLength)
@@ -264,7 +392,7 @@ __(function() {
               {
                 name: 'firstSecondLevelHttpHistoryStashRestoreTest',
                 reqSpec: {
-                  url: '/ewNZGrjd',
+                  url: path,
                   method: 'GET'
                 },
                 resSpec: {
@@ -274,7 +402,7 @@ __(function() {
               {
                 name: 'secondSecondLevelHttpHistoryStashRestoreTest',
                 reqSpec: {
-                  url: '/ewNZGrjd',
+                  url: path,
                   method: 'GET'
                 },
                 resSpec: {
@@ -286,7 +414,7 @@ __(function() {
           {
             name: 'secondFirstLevelHttpHistoryStashRestoreTest',
             reqSpec: {
-              url: '/ewNZGrjd',
+              url: path,
               method: 'GET'
             },
             resSpec: {
@@ -294,7 +422,29 @@ __(function() {
             }
           },
         ]
-      })
+      }),
+      {
+        name: 'resSpecMethodBoundToTestWhenReqSpecIsMethod',
+        setup: function() {
+          this.scope = nock(baseUrl).get(path).reply(200)
+        },
+        teardown: function() {
+          try {
+            this.scope.isDone()
+          } finally {
+            nock.cleanAll()
+          }
+        },
+        reqSpec: function() {
+          return {
+            url: path,
+            method: 'GET'
+          }
+        },
+        resSpec: function() {
+          assert.equal(this.parent.name, 'HttpTestTests')
+        }
+      }
     ]
   })
   module.exports = HttpTestTests
