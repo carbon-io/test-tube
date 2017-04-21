@@ -432,7 +432,7 @@ same functions described in previous sections.
 .. literalinclude:: ../code-frags/hello-world/test/HttpTests.js
   :language: js
   :linenos:
-  :lines: 13-34,46-65,292-
+  :lines: 13-34,46-66,292-
 
 If ``reqSpec`` is a function, it will be bound to the test instance, called
 with the context object as the first argument, and should return a ``refSpec`` as
@@ -441,7 +441,7 @@ described above.
 .. literalinclude:: ../code-frags/hello-world/test/HttpTests.js
   :language: js
   :linenos:
-  :lines: 66-78
+  :lines: 67-78
 
 resSpec
 ^^^^^^^
