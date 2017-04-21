@@ -1,5 +1,6 @@
 var util = require('util')
 
+var bodyParser = require('body-parser')
 var express = require('express')
 
 function HelloWorld(addr, port, name) {
@@ -56,39 +57,61 @@ HelloWorld.prototype.cmdargs = {
 
 HelloWorld.prototype.say = function(opts) {
   return util.format(
-    HelloWorld._template, 
-    opts && opts.name || this.name, 
+    HelloWorld._template,
+    opts && opts.name || this.name,
     '.')
 }
 
 HelloWorld.prototype.yell = function(opts) {
   return util.format(
-    HelloWorld._template, 
-    opts && opts.name || this.name, 
+    HelloWorld._template,
+    opts && opts.name || this.name,
     '!').toUpperCase()
 }
 
 HelloWorld.prototype.scream = function(opts) {
   return util.format(
-    HelloWorld._template, 
-    opts && opts.name || this.name, 
+    HelloWorld._template,
+    opts && opts.name || this.name,
     '!!!').toUpperCase()
 }
 
 HelloWorld.prototype.serve = function(opts, cb) {
   var self = this
   var app = express()
+  app.use(bodyParser.json())
   app.get('/', function(req, res) {
     res.redirect('/say/')
   })
   app.get('/say(/:name)?/?', function(req, res) {
-    res.send(self.say(req.params.name ? req.params : opts))
+    res.send(self.say(req.query.name ?
+      req.query : req.params.name ?
+        req.params : opts))
+  })
+  app.post('/say(/:name)?/?', function(req, res) {
+    res.send(self.say(req.body.name ?
+      req.body : req.params.name ?
+        req.params : opts))
   })
   app.get('/yell(/:name)?/?', function(req, res) {
-    res.send(self.yell(req.params.name ? req.params : opts))
+    res.send(self.yell(req.query.name ?
+      req.query : req.params.name ?
+        req.params : opts))
+  })
+  app.post('/yell(/:name)?/?', function(req, res) {
+    res.send(self.yell(req.body.name ?
+      req.body : req.params.name ?
+        req.params : opts))
   })
   app.get('/scream(/:name)?/?', function(req, res) {
-    res.send(self.yell(req.params.name ? req.params : opts))
+    res.send(self.scream(req.query.name ?
+      req.query : req.params.name ?
+        req.params : opts))
+  })
+  app.post('/scream(/:name)?/?', function(req, res) {
+    res.send(self.scream(req.body.name ?
+      req.body : req.params.name ?
+        req.params : opts))
   })
   this._server = app.listen(this.port, this.addr, cb)
 }

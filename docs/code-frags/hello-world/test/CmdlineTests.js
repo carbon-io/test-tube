@@ -6,7 +6,7 @@ var __ = carbon.fibers.__(module)
 var o = carbon.atom.o(module)
 var testtube = carbon.testtube
 
-var HelloWorld = require('../lib/hello-world')
+var HelloWorld = require('../lib/HelloWorld')
 
 __(function() {
   module.exports = o.main({

@@ -11,6 +11,7 @@
   },
   "dependencies" : {
     "carbon-io": "*",
+    "body-parser": "1.x",
     "express": "4.x"
   },
   "scripts": {

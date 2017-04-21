@@ -1,4 +1,5 @@
 var assert = require('assert')
+var querystring = require('querystring')
 var urlParse = require('url').parse
 
 var carbon = require('carbon-io')
@@ -8,7 +9,7 @@ var o = carbon.atom.o(module)
 var _o = carbon.bond._o(module)
 var testtube = carbon.testtube
 
-var HelloWorld = require('../lib/hello-world')
+var HelloWorld = require('../lib/HelloWorld')
 
 DEFAULT_NAME = 'foo'
 BASE_URL = 'http://127.0.0.1:8888'
@@ -237,6 +238,55 @@ __(function() {
         resSpec: {
           statusCode: 200,
           body: `Hello ${DEFAULT_NAME}.`
+        }
+      },
+      {
+        reqSpec: {
+          url: '/say',
+          method: 'GET',
+          parameters: {
+            name: 'foo'
+          }
+        },
+        resSpec: {
+          statusCode: 200,
+          request: function(val) {
+            assert.deepEqual(querystring.parse(val.url.query), {name: 'foo'})
+          },
+          body: 'Hello foo.'
+        }
+      },
+      {
+        reqSpec: {
+          url: '/say',
+          method: 'GET',
+          headers: {
+            foo: 'bar'
+          }
+        },
+        resSpec: {
+          statusCode: 200,
+          request: function(val) {
+            assert('foo' in val.headers)
+            assert.equal(val.headers.foo, 'bar')
+          },
+          body: `Hello ${DEFAULT_NAME}.`
+        }
+      },
+      {
+        reqSpec: {
+          url: '/scream',
+          method: 'POST',
+          body: {
+            name: 'bar'
+          }
+        },
+        resSpec: {
+          statusCode: 200,
+          request: function(val) {
+            assert.deepEqual(val.body, JSON.stringify({name: 'bar'}))
+          },
+          body: 'HELLO BAR!!!'
         }
       },
     ]

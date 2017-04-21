@@ -43,7 +43,7 @@ Test Suite Structure
 
 Defining your test suite is pretty straight forward and for those familiar with
 traditional unit testing frameworks like ``Java``'s ``JUnit`` or ``Python``'s
-``unittest`` module, things should feel reasonably comfortable. 
+``unittest`` module, things should feel reasonably comfortable.
 
 With ``test-tube`` there is no difference between a "test" and a "test suite",
 as the :js:class:`~testtube.Test` class acts as both. A basic test suite then
@@ -115,7 +115,7 @@ main module (e.g., if you just want to run ``hello-world``'s command line
 tests, you would issue the command ``node test/cmdline-tests.js``).
 Additionally, it should be noted that the ``main`` variant of both the ``__``
 and ``o`` operators are required (see documentation for ``@carbon-io/fibers``
-and ``@carbon-io/atom`` for a more in-depth explanation). 
+and ``@carbon-io/atom`` for a more in-depth explanation).
 
 Basic Tests
 -----------
@@ -141,7 +141,7 @@ indicate a failure, simply throw an error. To indicate success, don't.
 Asynchronous
 ^^^^^^^^^^^^
 
-If a test is asynchronous, use the ``done`` errback to indicate the test 
+If a test is asynchronous, use the ``done`` errback to indicate the test
 has completed:
 
 .. code-block:: js
@@ -335,7 +335,7 @@ Context
 
 In order to make test suites reentrant, ``test-tube`` provides a context object
 that is passed down through the execution tree as the first argument to each
-test's ``setup``, ``teardown``, and ``doTest`` mthods. 
+test's ``setup``, ``teardown``, and ``doTest`` mthods.
 
 .. literalinclude:: ../code-frags/hello-world/test/ContextTests.js
   :language: js
@@ -392,7 +392,7 @@ shorthand:
   tests: [
     ...
     {
-      reqSpec: { 
+      reqSpec: {
         <request specification>
       },
       resSpec: {
@@ -411,20 +411,28 @@ A ``reqSpec`` has one required property, ``method``, which should be an
 ``HTTP`` verb (e.g., ``GET``, ``PUT``, ``POST``, etc.). Beyond this, the ``URL``
 to probe can be specified using the ``url`` property as an absolute
 ``URL`` (containing the scheme, host, path, etc.) or as a relative ``URL`` (to
-be appended to the aforementioned ``baseUrl`` property of the parent test). 
+be appended to the aforementioned ``baseUrl`` property of the parent test).
 
 .. literalinclude:: ../code-frags/hello-world/test/HttpTests.js
   :language: js
   :linenos:
-  :lines: 13-34,214-
+  :lines: 13-34,214-242,292-
 
-In addition to these two properties, ``name``, ``setup``, and ``teardown`` are
-also valid and perform the same functions described in previous sections.
+Additionally, you can specify query parameters with ``parameters`` property,
+headers with the ``headers`` property, and a body with the ``body`` property.
 
 .. literalinclude:: ../code-frags/hello-world/test/HttpTests.js
   :language: js
   :linenos:
-  :lines: 13-34,46-65,242-
+  :lines: 13-34,243-
+
+Finally, ``name``, ``setup``, and ``teardown`` are also valid and perform the
+same functions described in previous sections.
+
+.. literalinclude:: ../code-frags/hello-world/test/HttpTests.js
+  :language: js
+  :linenos:
+  :lines: 13-34,46-65,292-
 
 If ``reqSpec`` is a function, it will be bound to the test instance, called
 with the context object as the first argument, and should return a ``refSpec`` as
@@ -465,7 +473,7 @@ simply want to replay a previous request. The ``httpHistory`` object is an
 instance of :js:class:`~testtube.HttpTestHistory` and has five methods of
 interest: ``getReqSpec``, ``getResSpec``, ``getReq``, ``getRes``, and ``get``
 (where ``get`` simply returns all history for a particular test).
-All of these methods take an integer or a string as an argument (the "index"). If the 
+All of these methods take an integer or a string as an argument (the "index"). If the
 index is negative, the Nth previous history object is returned. If the index is
 postive it starts from the Nth history object starting from the beginning (e.g.
 ``0`` would return the history object for the first test). Finally, if the index
@@ -480,7 +488,7 @@ Skipping Tests
 --------------
 
 Sometimes a test needs to be skipped (e.g., when a certain language feature is not
-available in the version of node being run) or marked as unimplemented. There are 
+available in the version of node being run) or marked as unimplemented. There are
 a couple ways to do this.
 
 To skip a test, either throw an instance of
@@ -493,7 +501,7 @@ To skip a test, either throw an instance of
   :lines: 15-24
 
 Note, if :js:class:`~testtube.util.SkipTest` is instantiated, the
-``description`` property will be used as the ``message`` argument to 
+``description`` property will be used as the ``message`` argument to
 :js:class:`~testtube.errors.SkipTestError`.
 
 It is often common to think of tests that need to be implemented as one is
@@ -534,7 +542,7 @@ Command Line
 .. todo:: document command line
 
 .. code-block:: sh
-  
+
  $> node test -h
 
   Usage: node test <command> [options]
@@ -548,4 +556,4 @@ Command Line
      --exclude GLOB   Process tests not matching GLOB (if --include is present, --exclude will be skipped if the test is matched by the former)
 
   Environment variables:
-    <none> 
+    <none>
