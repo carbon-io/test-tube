@@ -1,4 +1,5 @@
 var assert = require('assert')
+var querystring = require('querystring')
 var urlResolve = require('url').resolve
 
 var _ = require('lodash')
@@ -443,6 +444,66 @@ __(function() {
         },
         resSpec: function() {
           assert.equal(this.parent.name, 'HttpTestTests')
+        }
+      },
+      {
+        name: 'parametersTest',
+        setup: function() {
+          this.scope = nock(baseUrl).get(path)
+                                    .query({
+                                      foo: 'bar',
+                                      baz: 'yaz'
+                                    })
+                                    .reply(200)
+        },
+        teardown: function() {
+          try {
+            this.scope.isDone()
+          } finally {
+            nock.cleanAll()
+          }
+        },
+        reqSpec: {
+          url: path,
+          method: 'GET',
+          parameters: {
+            foo: 'bar',
+            baz: 'yaz'
+          }
+        },
+        resSpec: function(res) {
+          assert.equal(res.statusCode, 200)
+          assert.equal(res.request.url.query, querystring.stringify({
+            foo: 'bar',
+            baz: 'yaz'
+          }))
+        }
+      },
+      {
+        name: 'headersTest',
+        setup: function() {
+          this.scope = nock(baseUrl).get(path)
+                                    .matchHeader('foo', 'bar')
+                                    .reply(200)
+        },
+        teardown: function() {
+          try {
+            this.scope.isDone()
+          } finally {
+            nock.cleanAll()
+          }
+        },
+        reqSpec: {
+          url: path,
+          method: 'GET',
+          headers: {
+            foo: 'bar'
+          }
+        },
+        resSpec: function(res) {
+          assert.equal(res.statusCode, 200)
+          assert.deepEqual(_.pick(res.request.headers, ['foo']), 
+                           {foo: 'bar'})
         }
       }
     ]
