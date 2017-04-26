@@ -25,6 +25,7 @@
     "@carbon-io/fibers": "0.7.x",
     "@carbon-io/ejson": "0.5.x",
     "@carbon-io/http-errors": "0.1.x",
+    "@carbon-io/leafnode": "0.4.x",
     "lodash" : "4.5.x",
     "colour": "0.7.x",
     "minimatch": "3.0.x"
