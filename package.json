@@ -17,6 +17,7 @@
     "mockery": "2.0.x",
     "sinon": "1.17.x",
     "express": "4.x",
+    "body-parser": "1.x",
     "nock": "9.0.x"
   },
   "dependencies" : {

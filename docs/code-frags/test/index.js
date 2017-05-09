@@ -29,7 +29,8 @@ __(function() {
               warnOnUnregistered: false
             })
             return [
-              _o('../hello-world/test')
+              _o('../hello-world/test'),
+              _o('../standalone-examples/index-example')
             ]
           } finally {
             mockery.disable()

@@ -49,24 +49,10 @@ With ``test-tube`` there is no difference between a "test" and a "test suite",
 as the :js:class:`~testtube.Test` class acts as both. A basic test suite then
 might look something like the following:
 
-.. code-block:: js
-
-  var carbon = require('carbon-io')
-  var __ = carbon.fibers.__(module).main
-  var o = carbon.atom.o(module).main
-  var _o = carbon.bond._o(module)
-  var testtube = carbon.testtube
-
-  module.exports = __(function() o({
-    _type: testtube.Test,
-    name: 'FooBarBazTest',
-    description: 'Test all the foos, bars, and bazes.',
-    return o({
-      _('./foo-tests'),
-      _('./bar-tests'),
-      _('./baz-tests')
-    }))
-  })
+.. literalinclude:: ../code-frags/standalone-examples/index-example/index.js
+    :language: javascript
+    :linenos:
+    :lines: 1-10, 14-
 
 In the context of our "hello-world" application (see
 :file:`<test-tube-root>/docs/code-frags/hello-world`) it looks as follows:
@@ -95,13 +81,10 @@ With the corresponding directory hierarchy looking like:
 
 You may have noticed a bit a boiler plate in the previous two examples:
 
-.. code-block:: js
-
-  __(function() {
-    return o({
-      ....
-    })
-  })
+.. literalinclude:: ../code-frags/standalone-examples/index-example/index.js
+    :language: javascript
+    :linenos:
+    :lines: 1-13, 21-
 
 .. todo:: fix up links to fibers and atom documentation below
 
@@ -545,10 +528,10 @@ Command Line
 
  $> node test -h
 
-  Usage: node test <command> [options]
+  Usage: node test [command] [options]
 
   command
-    run     Run the test suite
+    run     Run the test suite (default)
 
   Options:
      --path PATH      Process tests rooted at PATH (globs allowed)
