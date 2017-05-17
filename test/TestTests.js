@@ -260,6 +260,40 @@ __(function() {
             name: 'contextStateStashRestoreSub2Test',
           })
         ]
+      }),
+      o({
+        _type: '../lib/Test',
+        name: 'UndefinedChildTestError',
+        doTest: function() {
+          var test = o({
+            _type: '../lib/Test',
+            name: 'FooTest',
+            tests: [
+              {},
+              o({
+                _type: '../lib/Test',
+                name: 'BarTest',
+                doTest: function() {
+                  assert(true)
+                }
+              })
+            ]
+          })
+          var err = undefined
+          var result = undefined
+          try {
+            result = test.sync.run(undefined)
+          } catch (e) {
+            err = e
+          }
+          assert(_.isNil(err))
+          assert(!_.isNil(result) && !_.isNil(result.error))
+          assert.equal(
+            result.error.toString(), 
+            'TypeError: Test does not appear to be an instance of ' +
+            'testtube.Test. You may be missing "o()", "_type", or ' +
+            '"module.exports" may not be set appropriately in a child module.')
+        }
       })
     ]
   })
