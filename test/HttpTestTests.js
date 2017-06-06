@@ -11,6 +11,7 @@ var _o = require('@carbon-io/bond')._o(module)
 var o = require('@carbon-io/atom').o(module)
 
 var HttpTest = require('../lib/HttpTest')
+var SkipTestError = require('../lib/errors').SkipTestError
 
 var NODE_MAJOR_VERSION = parseInt(process.version.match(/v(\d+)\.\d+\.\d+/)[1])
 
@@ -488,7 +489,7 @@ __(function() {
                                     .matchHeader('foo', 'bar')
                                     .reply(200)
           if (NODE_MAJOR_VERSION > 6) {
-            throw new testtube.errors.SkipTestError('nock.matchHeaders broken in node 8 (https://github.com/node-nock/nock/issues/925)')
+            throw new SkipTestError('nock.matchHeaders broken in node 8 (https://github.com/node-nock/nock/issues/925)')
           }
         },
         teardown: function() {
