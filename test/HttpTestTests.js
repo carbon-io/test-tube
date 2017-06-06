@@ -484,12 +484,12 @@ __(function() {
       {
         name: 'headersTest',
         setup: function() {
-          if (NODE_MAJOR_VERSION > 6) {
-            throw new testtube.errors.SkipTestError('nock.matchHeaders broken in node 8 (https://github.com/node-nock/nock/issues/925)')
-          }
           this.scope = nock(baseUrl).get(path)
                                     .matchHeader('foo', 'bar')
                                     .reply(200)
+          if (NODE_MAJOR_VERSION > 6) {
+            throw new testtube.errors.SkipTestError('nock.matchHeaders broken in node 8 (https://github.com/node-nock/nock/issues/925)')
+          }
         },
         teardown: function() {
           try {
