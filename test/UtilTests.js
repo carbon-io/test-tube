@@ -35,7 +35,7 @@ __(function() {
         description: 'test the SkipTest convenience class',
         setup: function() {
           this.sandbox = sinon.sandbox.create()
-          this.sandbox.stub(Test.prototype, '_log', function() {})
+          this.sandbox.stub(Test.prototype, '_log').callsFake(function() { /* noop */ })
         },
         teardown: function() {
           this.sandbox.restore()
@@ -79,7 +79,7 @@ __(function() {
         description: 'test the NotImplementedTest convenience class',
         setup: function() {
           this.sandbox = sinon.sandbox.create()
-          this.sandbox.stub(Test.prototype, '_log', function() {})
+          this.sandbox.stub(Test.prototype, '_log').callsFake(function() { /* noop */ })
         },
         teardown: function() {
           this.sandbox.restore()

@@ -14,11 +14,12 @@
   "main": "lib/index.js",
   "engines": { "node": ">= 0.12.0" },
   "devDependencies": {
-    "mockery": "2.0.x",
-    "sinon": "1.17.x",
-    "express": "4.x",
     "body-parser": "1.x",
-    "nock": "9.0.x"
+    "deep-diff": "0.3.x",
+    "express": "4.x",
+    "mockery": "2.0.x",
+    "nock": "9.0.x",
+    "sinon": "2.4.x"
   },
   "dependencies" : {
     "@carbon-io/atom": "0.7.x",

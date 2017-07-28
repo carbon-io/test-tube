@@ -338,7 +338,7 @@ __(function() {
               }
             ]
           })
-          this.sandbox.stub(_o('../lib/Test').prototype, '_log', function() {})
+          this.sandbox.stub(_o('../lib/Test').prototype, '_log').callsFake(function() {})
           var result = testSuite.run()
           assert(result.passed)
           assert(testSuite.setupCalled)

@@ -1,6 +1,8 @@
 var assert = require('assert')
+var inspect = require('util').inspect
 
 var _ = require('lodash')
+var diff = require('deep-diff').diff
 var sinon = require('sinon')
 
 var __ = require('@carbon-io/fibers').__(module)
@@ -71,7 +73,7 @@ __(function() {
         setup: function() {
           var self = this
           this.sandbox = sinon.sandbox.create()
-          this.sandbox.stub(process, 'exit', function() {
+          this.sandbox.stub(process, 'exit').callsFake(function() {
             throw new Error('exit')
           })
           this._tests = o({
@@ -142,11 +144,11 @@ __(function() {
             ]
           })
           // suppress logging in test suite being tested
-          this.sandbox.stub(this._tests, '_log', function() { /* noop */ })
+          this.sandbox.stub(this._tests, '_log').callsFake(function() { /* noop */ })
           this._tests.tests.forEach(function(test) {
-            self.sandbox.stub(test, '_log', function() { /* noop */ })
+            self.sandbox.stub(test, '_log').callsFake(function() { /* noop */ })
             test.tests.forEach(function(test) {
-              self.sandbox.stub(test, '_log', function() { /* noop */ })
+              self.sandbox.stub(test, '_log').callsFake(function() { /* noop */ })
             })
           })
         },
@@ -157,7 +159,7 @@ __(function() {
           var result = this._tests.run()
 
           // SkipTestErrorTestSuite
-          assert(result.passed) 
+          assert(result.passed)
           assert(!result.skipped)
 
           // SetupSkipTestErrorTest
@@ -183,11 +185,11 @@ __(function() {
           assert(!result.tests[1].tests[0].skipped)
           assert(typeof result.tests[1].tests[0].error === 'undefined')
           assert(this._tests.tests[1].tests[0].doTestRan)
-          
+
           // ChildSkipTestErrorTest
           assert(result.tests[1].tests[1].passed)
           assert(result.tests[1].tests[1].skipped)
-          assert.equal(result.tests[1].tests[1].error.message, 
+          assert.equal(result.tests[1].tests[1].error.message,
                        this._tests.tests[1].tests[1].name)
           assert(!this._tests.tests[1].tests[1].doTestRan)
 
@@ -196,7 +198,7 @@ __(function() {
           assert(!result.tests[1].tests[2].skipped)
           assert(typeof result.tests[1].tests[2].error === 'undefined')
           assert(this._tests.tests[1].tests[2].doTestRan)
-          
+
           // NotImplementedErrorTest
           assert(result.tests[2].passed)
           assert(result.tests[2].skipped)
@@ -289,10 +291,52 @@ __(function() {
           assert(_.isNil(err))
           assert(!_.isNil(result) && !_.isNil(result.error))
           assert.equal(
-            result.error.toString(), 
+            result.error.toString(),
             'TypeError: Test does not appear to be an instance of ' +
             'testtube.Test. You may be missing "o()", "_type", or ' +
             '"module.exports" may not be set appropriately in a child module.')
+        }
+      }),
+      o({
+        _type: '../lib/Test',
+        name: 'DeepDiffTest',
+        setup: function() {
+          var self = this
+          this.output = ''
+          this.outStub = sinon.stub(console, 'log').callsFake(function(msg) {
+            self.output += msg
+          })
+          this.exitStub = sinon.stub(process, 'exit')
+          this.actual = {
+              a: {
+                b: 'c'
+              }
+            }
+          this.expected = {
+              a: {
+                c: 'b'
+              }
+            }
+        },
+        teardown: function() {
+          this.outStub.restore()
+          this.exitStub.restore()
+        },
+        doTest: function() {
+          var self = this
+          var test = o({
+            _type: '../lib/Test',
+            doTest: function() {
+              assert.deepEqual(self.actual, self.expected)
+            }
+          })
+          var result = test.run()
+          test.generateReport(result)
+          var diffLines = _.split(
+            inspect(diff(this.actual, this.expected), {depth: null, colors: true}), '\n')
+          for (var i = 0; i < diffLines.length; i++) {
+            assert(_.includes(this.output, diffLines[i]))
+          }
         }
       })
     ]
