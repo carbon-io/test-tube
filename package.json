@@ -15,7 +15,6 @@
   "engines": { "node": ">= 0.12.0" },
   "devDependencies": {
     "body-parser": "1.x",
-    "deep-diff": "0.3.x",
     "express": "4.x",
     "mockery": "2.0.x",
     "nock": "9.0.x",
@@ -28,6 +27,7 @@
     "@carbon-io/ejson": "0.5.x",
     "@carbon-io/http-errors": "0.1.x",
     "@carbon-io/leafnode": "0.4.x",
+    "deep-diff": "0.3.x",
     "lodash" : "4.5.x",
     "colour": "0.7.x",
     "minimatch": "3.0.x"
