@@ -418,7 +418,7 @@ same functions described in previous sections.
   :lines: 13-34,46-66,292-
 
 If ``reqSpec`` is a function, it will be bound to the test instance, called
-with the context object as the first argument, and should return a ``refSpec`` as
+with the context object as the first argument, and should return a ``reqSpec`` as
 described above.
 
 .. literalinclude:: ../code-frags/hello-world/test/HttpTests.js
