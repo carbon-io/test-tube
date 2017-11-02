@@ -1,19 +1,14 @@
-.. _test-tube-class-ref:
+.. _undefined.HttpTest-module-ref:
 
-=========================
-Test-Tube class reference
-=========================
+===================
+undefined.HttpTest module reference
+===================
 
 .. toctree::
     :maxdepth: 1
     :titlesonly:
 
-    testtube.Test.rst
-    testtube.HttpTest.rst
-    testtube.errors.SkipTestError.rst
-    testtube.errors.NotImplementedError.rst
-    testtube.util.SkipTest.rst
-    testtube.util.NotImplementedTest.rst
-    testtube.TestContext.rst
-    testtube.HttpTestHistory.rst
-
+    test-tube.HttpTest.rst
+    test-tube.HttpTestHistory.rst
+    test-tube.Test.rst
+    test-tube.TestContext.rst
