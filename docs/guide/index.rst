@@ -325,7 +325,7 @@ test's ``setup``, ``teardown``, and ``doTest`` mthods.
   :linenos:
   :lines: 36-53
 
-The test context class (see: :js:class:`~testtube.TestContext`) has two
+The test context class (see: :js:class:`~testtube.TestContext`) has three
 important/reserved properties: ``global``, ``local``, and ``httpHistory``.
 ``local`` can be used to record any state relevant to the current test. If a
 test contains a ``tests`` property with more tests, the current state will be
