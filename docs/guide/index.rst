@@ -209,7 +209,7 @@ running the "hello-world" test suite looks as follows:
 
 .. todo:: coloring for the following output
 
-.. code-block:: sh
+.. code-block:: none
 
   $> npm test
 
