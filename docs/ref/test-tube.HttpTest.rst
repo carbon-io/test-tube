@@ -167,7 +167,7 @@ Properties
        :type: string
        :required:
 
-       
+       The URL that should be requested. Note, :class:`~test-tube.HttpTest.baseUrl` will be prepended to this value when making the request.
 
 
     .. attribute:: parameters
@@ -175,7 +175,7 @@ Properties
        :type: Object
        :required:
 
-       
+       The query string parameters to include in the request URL
 
 
     .. attribute:: headers
@@ -183,7 +183,7 @@ Properties
        :type: Object
        :required:
 
-       
+       The headers to include with the request
 
 
     .. attribute:: body
@@ -191,7 +191,7 @@ Properties
        :type: Object | Array
        :required:
 
-       
+       The body to include with the request
 
 
     .. attribute:: options
@@ -199,7 +199,7 @@ Properties
        :type: Object
        :required:
 
-       
+       Options that should be passed directly to the underlying "requests" module
 
 
 .. _test-tube.HttpTest.ResSpec:
@@ -214,7 +214,7 @@ Properties
        :type: number | function
        :required:
 
-       
+       The HTTP status code of the
 
 
     .. attribute:: headers
@@ -222,7 +222,7 @@ Properties
        :type: Object | function
        :required:
 
-       
+       The response headers
 
 
     .. attribute:: body
@@ -230,7 +230,7 @@ Properties
        :type: Object | Array | function
        :required:
 
-       
+       The response body
 
 
 .. _test-tube.HttpTest.TestSpec:
@@ -245,7 +245,7 @@ Properties
        :type: string
        :required:
 
-       
+       Used to name the test (note, a name will be generated using the method and URL if this is omitted)
 
 
     .. attribute:: description
@@ -277,7 +277,7 @@ Properties
        :type: :ref:`ReqSpec <test-tube.HttpTest.ReqSpec>`
        :required:
 
-       
+       A specification of the request to be sent
 
 
     .. attribute:: resSpec
@@ -285,5 +285,5 @@ Properties
        :type: :ref:`ResSpec <test-tube.HttpTest.ResSpec>`
        :required:
 
-       
+       A specification of the response expected
 

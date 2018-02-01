@@ -170,7 +170,7 @@ Properties
        :type: Error
        :required:
 
-       
+       An error thrown during test execution. Note, this can happen in :class:`~test-tube.Test.setup`, :class:`~test-tube.Test.doTest`, or :class:`~test-tube.Test.teardown`
 
 
     .. attribute:: time
@@ -249,7 +249,7 @@ Properties
        :type: Error
        :required:
 
-       
+       An error thrown during test execution. Note, this can happen in :class:`~test-tube.Test.setup`, :class:`~test-tube.Test.doTest`, or :class:`~test-tube.Test.teardown`
 
 
     .. attribute:: self
@@ -257,7 +257,7 @@ Properties
        :type: :ref:`SelfTestResult <test-tube.Test.SelfTestResult>`
        :required:
 
-       
+       An intermediate test "result" object representing the result of this test's :class:`~test-tube.Test.doTest` method
 
 
     .. attribute:: time
@@ -270,8 +270,8 @@ Properties
 
     .. attribute:: tests
 
-       :type: :ref:`TestResult[] <test-tube.Test.TestResult[]>`
+       :type: :ref:`TestResult[] <test-tube.Test.TestResult>`
        :required:
 
-       
+       The test result objects for all sub-tests
 
