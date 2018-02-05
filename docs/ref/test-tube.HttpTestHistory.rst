@@ -18,6 +18,38 @@ Instance Properties
     :noindex:
     :hidden:
 
+    .. attribute:: _requests
+
+       :type: :class:`~carbond.Request[]`
+       :required:
+
+       The request history
+
+
+    .. attribute:: _requestSpecs
+
+       :type: :ref:`ReqSpec[] <test-tube.HttpTest.ReqSpec>`
+       :required:
+
+       The request spec history
+
+
+    .. attribute:: _responses
+
+       :type: :class:`~carbond.Response[]`
+       :required:
+
+       The response history
+
+
+    .. attribute:: _responseSpecs
+
+       :type: :ref:`ResSpec <test-tube.HttpTest.ResSpec>`
+       :required:
+
+       The response spec history
+
+
     .. attribute:: length
 
        :type: number
@@ -32,6 +64,17 @@ Methods
 .. class:: test-tube.HttpTestHistory
     :noindex:
     :hidden:
+
+    .. function:: _get(index, target)
+
+        :param index: The index/name of the element to retrieve. If this is a number, it can be negative.
+        :type index: number | string
+        :param target: The history object for request specs, response specs, requests, or responses
+        :type target: Object[]
+        :throws: RangeError 
+        :rtype: Object
+
+        _get description
 
     .. function:: addReq(name, req)
 

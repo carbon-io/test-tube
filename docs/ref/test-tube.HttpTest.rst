@@ -19,6 +19,23 @@ Instance Properties
     :noindex:
     :hidden:
 
+    .. attribute:: _main
+
+       :inheritedFrom: :class:`~test-tube.Test`
+       :type: Object
+       :required:
+
+       The entry point for the "run" command"
+
+       .. csv-table::
+          :class: details-table
+          :header: "Name", "Type", "Default", "Description"
+          :widths: 10, 10, 10, 10
+
+          run, ``function``, ``undefined``, undefined
+
+
+
     .. attribute:: baseUrl
 
        :type: string
@@ -97,6 +114,146 @@ Methods
     :noindex:
     :hidden:
 
+    .. function:: _buildTestResult()
+
+        :inheritedFrom: :class:`~test-tube.Test`
+        :rtype: :ref:`TestResult <test-tube.Test.TestResult>`
+
+        A factory function for test result objects
+
+    .. function:: _checkName(context)
+
+        :inheritedFrom: :class:`~test-tube.Test`
+        :param context: A context object
+        :type context: test-tube.TestContext
+        :returns: ``true`` if the test name is filtered, ``false`` otherwise
+        :rtype: boolean
+
+        Checks if the current test is filtered by name (think ``basename``)
+
+    .. function:: _checkPath(context, useDirname)
+
+        :inheritedFrom: :class:`~test-tube.Test`
+        :param context: A context object
+        :type context: test-tube.TestContext
+        :param useDirname: Use ``path.dirname`` to grab the parent of the path retrieved from ``context``
+        :type useDirname: boolean
+        :returns: ``true`` if the test path is filtered, ``false`` otherwise
+        :rtype: boolean
+
+        Checks if the current path is filtered where "path" is built using the test names as they appear in the depth-first traversal up to the current test being executed (think ``dirname``)
+
+    .. function:: _errorExpected(result, error)
+
+        :inheritedFrom: :class:`~test-tube.Test`
+        :param result: A test result object (see :class:`~test-tube.Test._buildTestResult`)
+        :type result: Object
+        :param error: An error object as thrown by the test
+        :type error: Error
+        :returns: An updated test result object
+        :rtype: Object
+
+        Updates test result if an error was expected and encountered
+
+    .. function:: _executeHttpTest(test, context, cb)
+
+        :param test: A test in the test-suite
+        :type test: test-tube.Test
+        :param context: A context object
+        :type context: test-tube.TestContext
+        :param cb: An errback
+        :type cb: function
+        :rtype: undefined
+
+        Runs a test in the test-suite
+
+    .. function:: _generateReportHelper(result, level)
+
+        :inheritedFrom: :class:`~test-tube.Test`
+        :param result: The result object for this test
+        :type result: :ref:`TestResult <test-tube.Test.TestResult>`
+        :param level: The depth of this test in the overall test tree
+        :type level: number
+        :rtype: undefined
+
+        Recursively enerates and outputs the report for a test and sub-tests
+
+    .. function:: _generateReportSummary(result)
+
+        :inheritedFrom: :class:`~test-tube.Test`
+        :param result: undefined
+        :type result: :ref:`TestResult <test-tube.Test.TestResult>`
+        :rtype: undefined
+
+        The result object for the test-suite
+
+    .. function:: _init()
+
+        :rtype: undefined
+
+        Initialize the test object
+
+    .. function:: _initContext(context)
+
+        :inheritedFrom: :class:`~test-tube.Test`
+        :param context: An existing context object
+        :type context: test-tube.TestContext
+        :throws: TypeError Thrown if :class:`~test-tube.Test.testContextClass` is not :class:`~test-tube.TestContext` or a subclass thereof
+        :returns: An instance of :class:`~test-tube.TestContext`
+        :rtype: test-tube.TestContext
+
+        Initializes the :class:`~test-tube.TestContext` object that will be passed down to every test in the tree
+
+    .. function:: _initTest(test)
+
+        :param test: undefined
+        :type test: :ref:`TestSpec <test-tube.HttpTest.TestSpec>` | test-tube.Test
+        :rtype: test-tube.Test
+
+        The test spec (note, if this is already an instance of :class:`~test-tube.Test`, it will simply be returned)
+
+    .. function:: _initTests()
+
+        :rtype: undefined
+
+        Runs :class:`~test-tube.HttpTest._initTest` on each test in :class:`~test-tube.HttpTest.tests`. Note, this will replace any :ref:`TestSpec <test-tube.HttpTest.TestSpec>` with an instance of :class:`~test-tube.Test` that implements the spec.
+
+    .. function:: _log(msg, level)
+
+        :inheritedFrom: :class:`~test-tube.Test`
+        :param msg: A message to be logged
+        :type msg: string
+        :param level: The number of spaces to indent the message
+        :type level: number
+        :rtype: undefined
+
+        Logs a message to ``stdout``, indenting each line as appropriate
+
+    .. function:: _postrun(context)
+
+        :param context: A context object
+        :type context: test-tube.TestContext
+        :rtype: undefined
+
+        Restores the previous :class:`~test-tube.HttpHistory` object if one existed
+
+    .. function:: _prerun(context)
+
+        :param context: A context object
+        :type context: test-tube.TestContext
+        :rtype: undefined
+
+        Creates a new :class:`~test-tube.HttpHistory` object for this test-suite and stashes any previous history object that may be present in order to restore it when this suite finishes execution.
+
+    .. function:: _runSelf(context)
+
+        :inheritedFrom: :class:`~test-tube.Test`
+        :param context: A context object
+        :type context: test-tube.TestContext
+        :rtype: :ref:`SelfTestResult <test-tube.Test.SelfTestResult>`
+
+        Runs :class:`~test-tube.Test.doTest` and generates a result
+
     .. function:: generateReport(result)
 
         :inheritedFrom: :class:`~test-tube.Test`
@@ -154,7 +311,7 @@ Methods
 Properties
 ----------
 
-    .. attribute:: method
+    .. attribute:: test-tube.HttpTest.ReqSpec.method
 
        :type: string
        :required:
@@ -162,7 +319,7 @@ Properties
        The HTTP request method to use (e.g., "GET", "POST", "PUT", etc.)
 
 
-    .. attribute:: url
+    .. attribute:: test-tube.HttpTest.ReqSpec.url
 
        :type: string
        :required:
@@ -170,7 +327,7 @@ Properties
        The URL that should be requested. Note, :class:`~test-tube.HttpTest.baseUrl` will be prepended to this value when making the request.
 
 
-    .. attribute:: parameters
+    .. attribute:: test-tube.HttpTest.ReqSpec.parameters
 
        :type: Object
        :required:
@@ -178,7 +335,7 @@ Properties
        The query string parameters to include in the request URL
 
 
-    .. attribute:: headers
+    .. attribute:: test-tube.HttpTest.ReqSpec.headers
 
        :type: Object
        :required:
@@ -186,7 +343,7 @@ Properties
        The headers to include with the request
 
 
-    .. attribute:: body
+    .. attribute:: test-tube.HttpTest.ReqSpec.body
 
        :type: Object | Array
        :required:
@@ -194,7 +351,7 @@ Properties
        The body to include with the request
 
 
-    .. attribute:: options
+    .. attribute:: test-tube.HttpTest.ReqSpec.options
 
        :type: Object
        :required:
@@ -209,7 +366,7 @@ Properties
 Properties
 ----------
 
-    .. attribute:: statusCode
+    .. attribute:: test-tube.HttpTest.ResSpec.statusCode
 
        :type: number | function
        :required:
@@ -217,7 +374,7 @@ Properties
        The HTTP status code of the
 
 
-    .. attribute:: headers
+    .. attribute:: test-tube.HttpTest.ResSpec.headers
 
        :type: Object | function
        :required:
@@ -225,7 +382,7 @@ Properties
        The response headers
 
 
-    .. attribute:: body
+    .. attribute:: test-tube.HttpTest.ResSpec.body
 
        :type: Object | Array | function
        :required:
@@ -240,7 +397,7 @@ Properties
 Properties
 ----------
 
-    .. attribute:: name
+    .. attribute:: test-tube.HttpTest.TestSpec.name
 
        :type: string
        :required:
@@ -248,7 +405,7 @@ Properties
        Used to name the test (note, a name will be generated using the method and URL if this is omitted)
 
 
-    .. attribute:: description
+    .. attribute:: test-tube.HttpTest.TestSpec.description
 
        :type: string
        :required:
@@ -256,7 +413,7 @@ Properties
        See :class:`~test-tube.Test.description`
 
 
-    .. attribute:: setup
+    .. attribute:: test-tube.HttpTest.TestSpec.setup
 
        :type: function
        :required:
@@ -264,7 +421,7 @@ Properties
        See :class:`~test-tube.Test.setup`
 
 
-    .. attribute:: teardown
+    .. attribute:: test-tube.HttpTest.TestSpec.teardown
 
        :type: function
        :required:
@@ -272,7 +429,7 @@ Properties
        See :class:`~test-tube.Test.teardown`
 
 
-    .. attribute:: reqSpec
+    .. attribute:: test-tube.HttpTest.TestSpec.reqSpec
 
        :type: :ref:`ReqSpec <test-tube.HttpTest.ReqSpec>`
        :required:
@@ -280,7 +437,7 @@ Properties
        A specification of the request to be sent
 
 
-    .. attribute:: resSpec
+    .. attribute:: test-tube.HttpTest.TestSpec.resSpec
 
        :type: :ref:`ResSpec <test-tube.HttpTest.ResSpec>`
        :required:

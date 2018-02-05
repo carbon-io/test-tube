@@ -18,6 +18,22 @@ Instance Properties
     :noindex:
     :hidden:
 
+    .. attribute:: __testtube
+
+       :type: Object
+       :required:
+
+       xxx
+
+
+    .. attribute:: _tt
+
+       :type: Object
+       :required:
+
+       undefined
+
+
     .. attribute:: global
 
        :type: Object
@@ -49,6 +65,12 @@ Methods
     :noindex:
     :hidden:
 
+    .. function:: _init()
+
+        :rtype: undefined
+
+        Initialize the context object
+
     .. function:: restore()
 
         :returns: The new value of {@link test-tube.TestContext.local
@@ -72,7 +94,7 @@ Methods
 Properties
 ----------
 
-    .. attribute:: options
+    .. attribute:: test-tube.TestContext.InternalTestContext.options
 
        :type: Object
        :required:
@@ -80,7 +102,7 @@ Properties
        The parsed command line options used to execute the test-suite
 
 
-    .. attribute:: global
+    .. attribute:: test-tube.TestContext.InternalTestContext.global
 
        :type: Object
        :required:
@@ -88,7 +110,7 @@ Properties
        An object that can be accessed by all tests in the test-suite to store or pass state during a test-suite run. When a property is set on this object, it will remain until the test-suite completes, unless it is deleted during the course of test-suite execution. This is accessed by tests using the :class:`~test-tube.TestContext.global` property.
 
 
-    .. attribute:: local
+    .. attribute:: test-tube.TestContext.InternalTestContext.local
 
        :type: Object
        :required:
@@ -96,15 +118,15 @@ Properties
        An object that can be accessed by all tests in the test-suite to store or pass state during a single test run. If the test that is being executed contains sub-tests, this object will be stashed before running those tests and restored after they complete, restricting the accessibilty of this object's contents to a single test. This can be accessed by tests using the :class:`~test-tube.TestContext.local` property.
 
 
-    .. attribute:: localStateStack
+    .. attribute:: test-tube.TestContext.InternalTestContext.localStateStack
 
        :type: Object[]
        :required:
 
-       An array used to manage individual :ref:`local <test-tube.TestContext.InternalTestContext.local>` objects between individual test executions. This is not accessible to individual tests.
+       An array used to manage individual local state objects between individual test executions. This is not accessible to individual tests.
 
 
-    .. attribute:: httpHistory
+    .. attribute:: test-tube.TestContext.InternalTestContext.httpHistory
 
        :type: test-tube.HttpTestHistory
        :required:
@@ -112,7 +134,7 @@ Properties
        The current http history object used to track http requests and responses sent and received during the execution of an :class:`~test-tube.HttpTest` suite. This can be accessed by tests using the :class:`~test-tube.TestContext.httpHistory` property.
 
 
-    .. attribute:: path
+    .. attribute:: test-tube.TestContext.InternalTestContext.path
 
        :type: string
        :required:
